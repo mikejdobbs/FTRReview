@@ -1,0 +1,3 @@
+/Users/mike/Documents/xcode/FTRReview/xcode/CMakeFiles/FTRReview.dir
+/Users/mike/Documents/xcode/FTRReview/xcode/CMakeFiles/ALL_BUILD.dir
+/Users/mike/Documents/xcode/FTRReview/xcode/CMakeFiles/ZERO_CHECK.dir
