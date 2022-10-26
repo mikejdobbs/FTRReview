@@ -167,10 +167,24 @@ CMakeFiles/FTRReview.dir/src/PDFViewBookmarksCtrl.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FTRReview.dir/src/PDFViewBookmarksCtrl.cpp.s"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mike/Documents/xcode/FTRReview/src/PDFViewBookmarksCtrl.cpp -o CMakeFiles/FTRReview.dir/src/PDFViewBookmarksCtrl.cpp.s
 
+CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o: CMakeFiles/FTRReview.dir/flags.make
+CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewReviewCtrl.cpp
+CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewReviewCtrl.cpp
+
+CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.i"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/mike/Documents/xcode/FTRReview/src/PDFViewReviewCtrl.cpp > CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.i
+
+CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.s"
+	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/mike/Documents/xcode/FTRReview/src/PDFViewReviewCtrl.cpp -o CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.s
+
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o: CMakeFiles/FTRReview.dir/flags.make
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewDocumentFrame.cpp
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewDocumentFrame.cpp
 
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.i: cmake_force
@@ -184,7 +198,7 @@ CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.s: cmake_force
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o: CMakeFiles/FTRReview.dir/flags.make
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewDocumentPanel.cpp
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewDocumentPanel.cpp
 
 CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.i: cmake_force
@@ -198,7 +212,7 @@ CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.s: cmake_force
 CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o: CMakeFiles/FTRReview.dir/flags.make
 CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewPages.cpp
 CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewPages.cpp
 
 CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.i: cmake_force
@@ -212,7 +226,7 @@ CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.s: cmake_force
 CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o: CMakeFiles/FTRReview.dir/flags.make
 CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewPrintout.cpp
 CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewPrintout.cpp
 
 CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.i: cmake_force
@@ -226,7 +240,7 @@ CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.s: cmake_force
 CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o: CMakeFiles/FTRReview.dir/flags.make
 CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewTextRange.cpp
 CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewTextRange.cpp
 
 CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.i: cmake_force
@@ -240,7 +254,7 @@ CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.s: cmake_force
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o: CMakeFiles/FTRReview.dir/flags.make
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewThumbnailListBox.cpp
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewThumbnailListBox.cpp
 
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.i: cmake_force
@@ -254,7 +268,7 @@ CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.s: cmake_force
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o: CMakeFiles/FTRReview.dir/flags.make
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o: /Users/mike/Documents/xcode/FTRReview/src/PDFViewThumbnailListBoxImpl.cpp
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o: CMakeFiles/FTRReview.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o"
 	/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o -MF CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o.d -o CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o -c /Users/mike/Documents/xcode/FTRReview/src/PDFViewThumbnailListBoxImpl.cpp
 
 CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.i: cmake_force
@@ -274,6 +288,7 @@ FTRReview_OBJECTS = \
 "CMakeFiles/FTRReview.dir/src/PDFViewArtProvider.cpp.o" \
 "CMakeFiles/FTRReview.dir/src/PDFViewBookmarks.cpp.o" \
 "CMakeFiles/FTRReview.dir/src/PDFViewBookmarksCtrl.cpp.o" \
+"CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o" \
 "CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o" \
 "CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o" \
 "CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o" \
@@ -292,6 +307,7 @@ FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewActivityPanel.cpp.o
 FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewArtProvider.cpp.o
 FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewBookmarks.cpp.o
 FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewBookmarksCtrl.cpp.o
+FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o
 FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o
 FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewDocumentPanel.cpp.o
 FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o
@@ -302,7 +318,7 @@ FTRReview: CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBoxImpl.cpp.o
 FTRReview: CMakeFiles/FTRReview.dir/build.make
 FTRReview: /Users/mike/Documents/xcode/FTRReview/PDFium/lib/libpdfium.dylib
 FTRReview: CMakeFiles/FTRReview.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable FTRReview"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Linking CXX executable FTRReview"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/FTRReview.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

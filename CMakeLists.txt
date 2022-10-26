@@ -38,6 +38,7 @@ set(SOURCES
 	src/PDFViewArtProvider.cpp
 	src/PDFViewBookmarks.cpp
 	src/PDFViewBookmarksCtrl.cpp
+    src/PDFViewReviewCtrl.cpp
 	src/PDFViewDocumentFrame.cpp
 	src/PDFViewDocumentPanel.cpp
 	src/PDFViewPages.cpp
@@ -52,6 +53,7 @@ set(SOURCES
 	include/PDFViewBookmarksCtrl.h
 	include/PDFViewDocumentFrame.h
 	include/PDFViewDocumentPanel.h
+    include/PDFViewReviewCtrl.h
 	include/PDFViewThumbnailListBox.h
 	include/PDFViewActivityPanel.h
 	include/PDFViewBookmarks.h

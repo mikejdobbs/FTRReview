@@ -393,6 +393,30 @@ src/PDFViewPrintout.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/FTRReview.dir/build.make CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.s
 .PHONY : src/PDFViewPrintout.cpp.s
 
+src/PDFViewReviewCtrl.o: src/PDFViewReviewCtrl.cpp.o
+.PHONY : src/PDFViewReviewCtrl.o
+
+# target to build an object file
+src/PDFViewReviewCtrl.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/FTRReview.dir/build.make CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o
+.PHONY : src/PDFViewReviewCtrl.cpp.o
+
+src/PDFViewReviewCtrl.i: src/PDFViewReviewCtrl.cpp.i
+.PHONY : src/PDFViewReviewCtrl.i
+
+# target to preprocess a source file
+src/PDFViewReviewCtrl.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/FTRReview.dir/build.make CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.i
+.PHONY : src/PDFViewReviewCtrl.cpp.i
+
+src/PDFViewReviewCtrl.s: src/PDFViewReviewCtrl.cpp.s
+.PHONY : src/PDFViewReviewCtrl.s
+
+# target to generate assembly for a file
+src/PDFViewReviewCtrl.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/FTRReview.dir/build.make CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.s
+.PHONY : src/PDFViewReviewCtrl.cpp.s
+
 src/PDFViewTextRange.o: src/PDFViewTextRange.cpp.o
 .PHONY : src/PDFViewTextRange.o
 
@@ -507,6 +531,9 @@ help:
 	@echo "... src/PDFViewPrintout.o"
 	@echo "... src/PDFViewPrintout.i"
 	@echo "... src/PDFViewPrintout.s"
+	@echo "... src/PDFViewReviewCtrl.o"
+	@echo "... src/PDFViewReviewCtrl.i"
+	@echo "... src/PDFViewReviewCtrl.s"
 	@echo "... src/PDFViewTextRange.o"
 	@echo "... src/PDFViewTextRange.i"
 	@echo "... src/PDFViewTextRange.s"

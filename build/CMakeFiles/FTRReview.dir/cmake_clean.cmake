@@ -21,6 +21,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/FTRReview.dir/src/PDFViewPages.cpp.o.d"
   "CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o"
   "CMakeFiles/FTRReview.dir/src/PDFViewPrintout.cpp.o.d"
+  "CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o"
+  "CMakeFiles/FTRReview.dir/src/PDFViewReviewCtrl.cpp.o.d"
   "CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o"
   "CMakeFiles/FTRReview.dir/src/PDFViewTextRange.cpp.o.d"
   "CMakeFiles/FTRReview.dir/src/PDFViewThumbnailListBox.cpp.o"

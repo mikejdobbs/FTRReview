@@ -706,6 +706,7 @@ CMakeFiles/FTRReview.dir/src/PDFViewDocumentFrame.cpp.o: \
   /opt/homebrew/include/wx-3.2/wx/vlbox.h \
   /opt/homebrew/include/wx-3.2/wx/vscroll.h \
   /opt/homebrew/include/wx-3.2/wx/position.h \
+  /Users/mike/Documents/xcode/FTRReview/include/PDFViewReviewCtrl.h \
   /Users/mike/Documents/xcode/FTRReview/include/PDFViewArtProvider.h \
   /Users/mike/Documents/xcode/FTRReview/include/PDFViewActivityPanel.h \
   /opt/homebrew/include/wx-3.2/wx/animate.h \

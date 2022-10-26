@@ -1,12 +1,7 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        include/PDFViewBookmarksCtrl.h
-// Purpose:     wxPDFViewBookmarksCtrl class
-// Author:      Tobias Taschner
-// Created:     2014-08-07
-// Copyright:   (c) 2014 Tobias Taschner
-// Licence:     wxWindows licence
-/////////////////////////////////////////////////////////////////////////////
-
+/*
+ Controls booksmarks, AKA Review results
+ 
+ */
 #ifndef PDFVIEW_BOOKMARKS_CTRL_H
 #define PDFVIEW_BOOKMARKS_CTRL_H
 
@@ -14,16 +9,7 @@
 
 #include "PDFView.h"
 
-/**
-   Tree control that display the bookmarks defined in a PDF Document.
 
-   The control has the be linked with a wxPDFView by calling SetPDFView().
-
-   This control will automatically navigate to bookmarks if selected and will update 
-   the bookmark list when documents are loaded into the wxPDFView.
-
-   @see wxPDFView
-*/
 class wxPDFViewBookmarksCtrl: public wxDataViewCtrl
 {
 public:

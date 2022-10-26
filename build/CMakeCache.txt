@@ -219,9 +219,6 @@ FTRReview_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 FTRReview_SOURCE_DIR:STATIC=/Users/mike/Documents/xcode/FTRReview
 
-//The directory containing a CMake configuration file for PDFium.
-PDFium_DIR:PATH=PDFium_DIR-NOTFOUND
-
 //Path to a file.
 PDFium_INCLUDE_DIR:PATH=/Users/mike/Documents/xcode/FTRReview/PDFium/include
 

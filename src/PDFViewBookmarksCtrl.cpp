@@ -1,11 +1,6 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        src/PDFViewBookmarksCtrl.cpp
-// Purpose:     wxPDFViewBookmarksCtrl implementation
-// Author:      Tobias Taschner
-// Created:     2014-08-07
-// Copyright:   (c) 2014 Tobias Taschner
-// Licence:     wxWindows licence
-/////////////////////////////////////////////////////////////////////////////
+/*
+ Shows automated search results
+ */
 
 #include "PDFViewBookmarksCtrl.h"
 
@@ -19,24 +14,11 @@ public:
 	{
 	}
 
-	virtual unsigned int GetColumnCount() const
-	{
-		return 1;
-	}
-
-	virtual wxString GetColumnType( unsigned int WXUNUSED(col) ) const
-	{
-		return wxT("wxDataViewIconText");
-	}
-
 	virtual void GetValue( wxVariant &variant, const wxDataViewItem &item, unsigned int col ) const
 	{
-		wxPDFViewBookmark* bm = (wxPDFViewBookmark*) item.GetID();
 		if (col == 0)
 		{
-			wxDataViewIconText data(bm->GetTitle(), wxArtProvider::GetIcon(
-				(bm->empty()) ? wxART_HELP_PAGE : wxART_HELP_FOLDER, wxART_OTHER));
-
+			wxDataViewIconText data("Ham Found", wxArtProvider::GetIcon(wxART_HELP_PAGE));
 			variant << data;
 		}
 	}

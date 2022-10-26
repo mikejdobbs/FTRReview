@@ -10,8 +10,8 @@
 #include <wx/infobar.h>
 
 #include "PDFView.h"
-#include "PDFViewBookmarksCtrl.h"
 #include "PDFViewThumbnailListBox.h"
+#include "PDFViewReviewCtrl.h"
 
 class wxPDFViewActivityPanel;
 
@@ -81,8 +81,8 @@ protected:
 	wxSplitterWindow* m_splitter;
 	wxPanel* m_navPanel;
 	wxNotebook* m_docNotebook;
-	wxPanel* m_bookmarkPanel;
-	wxPDFViewBookmarksCtrl* m_pdfViewBookmarksCtrl;
+	wxPanel* m_reviewPanel;
+    PDFViewReviewCtrl* m_pdfViewReviewsCtrl;
 	wxPanel* m_thumbPanel;
 	wxPDFViewThumbnailListBox* m_thumbnailListBox;
 	wxPanel* m_docPanel;

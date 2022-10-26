@@ -1,11 +1,7 @@
-/////////////////////////////////////////////////////////////////////////////
-// Name:        src/PDFViewDocumentFrame.cpp
-// Purpose:     wxPDFViewDocumentFrame implementation
-// Author:      Tobias Taschner
-// Created:     2014-08-07
-// Copyright:   (c) 2014 Tobias Taschner
-// Licence:     wxWindows licence
-/////////////////////////////////////////////////////////////////////////////
+/*
+ Core file showing the PDF.  Called by FTRReview.
+ 
+ */
 
 #include "PDFViewDocumentFrame.h"
 #include "PDFViewArtProvider.h"
@@ -61,16 +57,16 @@ bool wxPDFViewDocumentFrame::Create(wxWindow* parent,
 	m_docNotebook = new wxNotebook( m_navPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize, 0 );
     m_docNotebook->SetMinSize(wxDLG_UNIT(this, wxSize(80, -1)));
 
-	m_bookmarkPanel = new wxPanel( m_docNotebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
-	wxBoxSizer* bookmarkPanelSizer = new wxBoxSizer( wxVERTICAL );
+	m_reviewPanel = new wxPanel( m_docNotebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
+	wxBoxSizer* reviewPanelSizer = new wxBoxSizer( wxVERTICAL );
 
-	m_pdfViewBookmarksCtrl = new wxPDFViewBookmarksCtrl(m_bookmarkPanel, wxID_ANY, wxDefaultPosition, wxDefaultSize);
-	bookmarkPanelSizer->Add( m_pdfViewBookmarksCtrl, 1, wxALL|wxEXPAND, 2 );
-
-	m_bookmarkPanel->SetSizer( bookmarkPanelSizer );
-	m_bookmarkPanel->Layout();
-	bookmarkPanelSizer->Fit( m_bookmarkPanel );
-	m_docNotebook->AddPage( m_bookmarkPanel, _("Bookmarks"), true );
+    m_pdfViewReviewsCtrl = new PDFViewReviewCtrl(m_reviewPanel,wxID_ANY);
+    reviewPanelSizer->Add( m_pdfViewReviewsCtrl, 1, wxALL|wxEXPAND, 2 );
+    
+	m_reviewPanel->SetSizer( reviewPanelSizer );
+	m_reviewPanel->Layout();
+	reviewPanelSizer->Fit( m_reviewPanel );
+	m_docNotebook->AddPage( m_reviewPanel, _("Review Flags"), true );
 	m_thumbPanel = new wxPanel( m_docNotebook, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL );
 	wxBoxSizer* thumbPanelSizer = new wxBoxSizer( wxVERTICAL );
 
@@ -191,7 +187,8 @@ bool wxPDFViewDocumentFrame::Create(wxWindow* parent,
 	m_pdfView->Bind(wxEVT_PDFVIEW_UNSUPPORTED_FEATURE, &wxPDFViewDocumentFrame::OnPDFUnsupportedFeature, this);
 	m_pdfView->Bind(wxEVT_PDFVIEW_ACTIVITY, &wxPDFViewDocumentFrame::OnPDFActivity, this);
 
-	m_pdfViewBookmarksCtrl->SetPDFView(m_pdfView);
+	//m_pdfViewBookmarksCtrl->SetPDFView(m_pdfView);
+    m_pdfViewReviewsCtrl->SetPDFView(m_pdfView);
 	m_thumbnailListBox->SetPDFView(m_pdfView);
 
 	UpdateSearchControls();
@@ -293,11 +290,6 @@ void wxPDFViewDocumentFrame::OnPDFDocumentReady(wxCommandEvent& event)
 	m_pageTxtCtrl->Enable();
 	m_searchCtrl->Enable();
 
-	if (!m_pdfView->GetRootBookmark())
-	{
-		m_docNotebook->RemovePage(0);
-	}
-	
 	bool showNavPane = cfg->ReadBool("ShowNavigation", m_pdfView->GetRootBookmark() != NULL);
 	ShowNavigationPane(showNavPane);
 	

@@ -10,6 +10,8 @@
 
 #include "PDFViewDocumentFrame.h"
 
+//Nothing is really in this file, except the option to load a document and create wxPDFViewDocumentFrame
+
 bool FTRReviewApp::OnInit()
 {
 	wxImage::AddHandler(new wxPNGHandler());

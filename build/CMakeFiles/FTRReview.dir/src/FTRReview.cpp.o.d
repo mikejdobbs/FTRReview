@@ -710,4 +710,5 @@ CMakeFiles/FTRReview.dir/src/FTRReview.cpp.o: \
   /Users/mike/Documents/xcode/FTRReview/include/PDFViewThumbnailListBox.h \
   /opt/homebrew/include/wx-3.2/wx/vlbox.h \
   /opt/homebrew/include/wx-3.2/wx/vscroll.h \
-  /opt/homebrew/include/wx-3.2/wx/position.h
+  /opt/homebrew/include/wx-3.2/wx/position.h \
+  /Users/mike/Documents/xcode/FTRReview/include/PDFViewReviewCtrl.h
