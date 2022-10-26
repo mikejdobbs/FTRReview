@@ -1,3 +1,0 @@
-/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles/FTRReview.dir
-/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles/edit_cache.dir
-/Users/mike/Documents/xcode/FTRReview/build/CMakeFiles/rebuild_cache.dir
