@@ -17,15 +17,18 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     
     AppendToggleColumn( "Toggle" );
     AppendTextColumn( "Text" );
+    AppendTextColumn( "Text" );
     
     wxVector<wxVariant> data;
     data.push_back( wxVariant(true) );
-    data.push_back( wxVariant("row 1") );
+    data.push_back( wxVariant("1") );
+    data.push_back( wxVariant("Proprietary Marking") );
     AppendItem( data );
     
     data.clear();
     data.push_back( wxVariant(false) );
-    data.push_back( wxVariant("row 3") );
+    data.push_back( wxVariant("2") );
+    data.push_back( wxVariant("Invention Report") );
     AppendItem( data );
     
     Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PDFViewReviewCtrl::OnSelectionChanged, this);
@@ -41,8 +44,12 @@ void PDFViewReviewCtrl::SetPDFView(wxPDFView* pdfView) {
 //called when user selects 
 void PDFViewReviewCtrl::OnSelectionChanged(wxDataViewEvent& event)
 {
+    const int rowID = GetSelectedRow();
+    wxString rowText = GetTextValue(rowID, 1);
+    int pageNumber;
+    rowText.ToInt(&pageNumber);
     
-    m_pdfView->GoToPage(2);
+    m_pdfView->GoToPage(pageNumber);
     event.Skip();
 }
 
