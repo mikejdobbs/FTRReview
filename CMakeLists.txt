@@ -46,6 +46,7 @@ set(SOURCES
 	src/PDFViewTextRange.cpp
 	src/PDFViewThumbnailListBox.cpp
 	src/PDFViewThumbnailListBoxImpl.cpp
+    src/PDFViewReviewSearcher.cpp
 
 	include/FTRReview.h
 	include/PDFView.h
@@ -62,6 +63,7 @@ set(SOURCES
 	include/PDFViewPrintout.h
 	include/PDFViewTextRange.h
 	include/PDFViewThumbnailListBoxImpl.h
+    include/PDFViewReviewSearcher.h
 )
 
 #target
