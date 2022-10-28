@@ -27,7 +27,7 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     
     data.clear();
     data.push_back( wxVariant(false) );
-    data.push_back( wxVariant("2") );
+    data.push_back( wxVariant("3") );
     data.push_back( wxVariant("Invention Report") );
     AppendItem( data );
     
@@ -45,6 +45,11 @@ void PDFViewReviewCtrl::SetPDFView(wxPDFView* pdfView) {
 void PDFViewReviewCtrl::OnSelectionChanged(wxDataViewEvent& event)
 {
     const int rowID = GetSelectedRow();
+    if (rowID == wxNOT_FOUND) {
+        event.Skip();
+        return;
+    }
+    
     wxString rowText = GetTextValue(rowID, 1);
     int pageNumber;
     rowText.ToInt(&pageNumber);
