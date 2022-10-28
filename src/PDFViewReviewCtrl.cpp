@@ -15,9 +15,9 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     
     m_pdfView = NULL;
     
-    AppendToggleColumn( "Toggle" );
-    AppendTextColumn( "Text" );
-    AppendTextColumn( "Text" );
+    AppendToggleColumn( "Toggle", wxDATAVIEW_CELL_ACTIVATABLE,10,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
+    AppendTextColumn( "Page", wxDATAVIEW_CELL_ACTIVATABLE,10,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
+    AppendTextColumn( "Issue" );
     
     wxVector<wxVariant> data;
     data.push_back( wxVariant(true) );
