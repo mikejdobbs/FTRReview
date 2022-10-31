@@ -1626,3 +1626,70 @@ void wxPDFViewImpl::ReleaseSDK()
 		FPDF_DestroyLibrary();
 	}
 }
+
+//Looks for reviews
+long wxPDFViewImpl::ReviewPDF() {
+
+    if (m_pages.empty())
+        return wxNOT_FOUND;
+    
+    //Add test reviews
+    reviews.clear();
+    
+    Review review;
+    review.searchString = "research";
+    review.description = "Find research";
+    review.errorText = "Research noted ";
+    reviews.push_back(review);
+
+    //for each page
+    for (int page = 0;page != GetPageCount(); ++page) {
+        for (Review *review = reviews.begin(); review != reviews.end(); ++review) {
+            ReviewPage(page, review);
+        } //end search for review
+
+    } //end review of each page
+
+    return 0;
+}
+
+long wxPDFViewImpl::ReviewPage(const int pageIndex, Review *review) {
+    
+    if (m_pages.empty())
+        return wxNOT_FOUND;
+
+    bool firstSearch = false;
+    int characterToStartSearchingFrom = 0;
+
+
+    // Find all the matches in the current page.
+    unsigned long flags = 0;
+    wxMBConvUTF16LE conv;
+    
+    FPDF_SCHHANDLE find = FPDFText_FindStart(
+        m_pages[pageIndex].GetTextPage(),
+#ifdef __WXMSW__
+        reinterpret_cast<FPDF_WIDESTRING>(review.searchString.wc_str(conv)),
+#else
+        reinterpret_cast<FPDF_WIDESTRING>((const char*)review->searchString.mb_str(conv)),
+#endif
+        flags, 0);
+    
+
+    wxPDFViewPage& page = m_pages[pageIndex]; //TODO: Not sure why this isn't a const
+
+    int resultCount = 0;
+    while (FPDFText_FindNext(find))
+    {
+        //add all matches to the review.matchs vector
+        const wxPDFViewTextRange result(&page,FPDFText_GetSchResultIndex(find),FPDFText_GetSchCount(find));
+        review->matches.push_back(result);
+        ++resultCount;
+    }
+
+    FPDFText_FindClose(find);
+
+    return resultCount;
+    
+}
+

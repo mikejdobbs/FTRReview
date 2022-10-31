@@ -188,6 +188,7 @@ bool wxPDFViewDocumentFrame::Create(wxWindow* parent,
 	m_pdfView->Bind(wxEVT_PDFVIEW_ACTIVITY, &wxPDFViewDocumentFrame::OnPDFActivity, this);
 
 	//m_pdfViewBookmarksCtrl->SetPDFView(m_pdfView);
+    
     m_pdfViewReviewsCtrl->SetPDFView(m_pdfView);
 	m_thumbnailListBox->SetPDFView(m_pdfView);
 
@@ -296,7 +297,8 @@ void wxPDFViewDocumentFrame::OnPDFDocumentReady(wxCommandEvent& event)
 	m_pdfView->SetFocus();
 	
 	m_pdfView->SetZoomType((wxPDFViewZoomType) cfg->ReadLong("ZoomType", wxPDFVIEW_ZOOM_TYPE_FIT_PAGE));
-
+    
+    
 	event.Skip();
 }
 

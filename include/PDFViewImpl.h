@@ -27,6 +27,10 @@
 #include "PDFViewBookmarks.h"
 #include "PDFViewTextRange.h"
 
+
+
+
+
 class wxPDFViewImpl: public wxPDFViewPagesClient, public wxEvtHandler
 {
 public:
@@ -121,6 +125,11 @@ public:
 	wxPDFView* GetCtrl() const { return m_ctrl; }
 
 	void ExecuteNamedAction(const wxString& action);
+    
+    //Reviews
+    wxVector<Review> reviews; //holds each review we are looking for.
+    long ReviewPDF(); //runs review populating the Match vector in each review variables
+    
 
 private:
 	wxPDFView* m_ctrl;
@@ -175,6 +184,7 @@ private:
 	int m_lastPageToSearch;
 	int m_lastCharacterIndexToSearch;
 	int m_currentFindIndex;
+    
 
 	void UpdateDocumentInfo();
 	
@@ -227,7 +237,10 @@ private:
 
 	static void ReleaseSDK();
 
+    long ReviewPage(const int pageIndex, Review *review);
+
 	friend class wxPDFViewPrintout;
+    
 };
 
 #endif // PDFVIEW_IMPL_H

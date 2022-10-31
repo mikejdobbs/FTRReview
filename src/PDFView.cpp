@@ -180,6 +180,18 @@ long wxPDFView::Find(const wxString& text, int flags)
 		return wxNOT_FOUND;
 }
 
+long wxPDFView::ReviewPDF()
+{
+    if (m_impl)
+        return m_impl->ReviewPDF();
+    else
+        return wxNOT_FOUND;
+}
+
+wxVector<Review>&  wxPDFView::GetReviewResults() {
+    return m_impl->reviews;
+}
+
 bool wxPDFView::IsPrintAllowed() const
 {
 	if (m_impl)

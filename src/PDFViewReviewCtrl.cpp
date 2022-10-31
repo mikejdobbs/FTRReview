@@ -6,10 +6,9 @@
 //
 
 #include "PDFViewReviewCtrl.h"
+#include "PDFViewPages.h"
 
 bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
-    //listctrl = new wxDataViewListCtrl( parent, wxID_ANY );
-    
     if ( !wxDataViewListCtrl::Create( parent, id ) )
         return false;
     
@@ -22,14 +21,15 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     wxVector<wxVariant> data;
     data.push_back( wxVariant(true) );
     data.push_back( wxVariant("1") );
-    data.push_back( wxVariant("Proprietary Marking") );
+    data.push_back( wxVariant("Ham") );
     AppendItem( data );
-    
     data.clear();
-    data.push_back( wxVariant(false) );
-    data.push_back( wxVariant("3") );
-    data.push_back( wxVariant("Invention Report") );
+
+    data.push_back( wxVariant(true) );
+    data.push_back( wxVariant("4") );
+    data.push_back( wxVariant("Ham Burger") );
     AppendItem( data );
+
     
     Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PDFViewReviewCtrl::OnSelectionChanged, this);
     Bind(wxEVT_SIZE, &PDFViewReviewCtrl::OnSize, this);
@@ -38,7 +38,22 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
 
 
 void PDFViewReviewCtrl::SetPDFView(wxPDFView* pdfView) {
+    if (m_pdfView != NULL)
+    {
+        // Disconnect events
+        m_pdfView->Unbind(wxEVT_PDFVIEW_DOCUMENT_READY, &PDFViewReviewCtrl::OnPDFDocumentReady, this);
+        m_pdfView->Unbind(wxEVT_PDFVIEW_DOCUMENT_CLOSED, &PDFViewReviewCtrl::OnPDFDocumentClosed, this);
+    }
+
     m_pdfView = pdfView;
+
+    if (m_pdfView != NULL)
+    {
+        // Connect events
+        m_pdfView->Bind(wxEVT_PDFVIEW_DOCUMENT_READY, &PDFViewReviewCtrl::OnPDFDocumentReady, this);
+        m_pdfView->Bind(wxEVT_PDFVIEW_DOCUMENT_CLOSED, &PDFViewReviewCtrl::OnPDFDocumentClosed, this);
+    }
+    
 }
 
 //called when user selects 
@@ -73,6 +88,28 @@ void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
 
 void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
 {
+    //Review TODO:Multithreaded?
+    m_pdfView->ReviewPDF();
+
+    //TODO: Cleanup
+    wxVector<Review> reviews = m_pdfView->GetReviewResults();
+    for (Review *review = reviews.begin(); review != reviews.end(); ++review) {
+        for (wxPDFViewTextRange *match = review->matches.begin(); match != review->matches.end(); ++match) {
+            //TODO FIXconst
+            wxString pageNumber;
+            pageNumber << match->GetPage()->GetIndex();
+            wxPrintf("Found match on page %s", pageNumber);
+            
+            wxVector<wxVariant> data;
+//            data.push_back( wxVariant(true) );
+//            data.push_back( wxVariant(pageNumber) );
+//            data.push_back( wxVariant(review->description) );
+//            AppendItem( data );
+
+        } //end search for review
+
+    } //end search for review
+
     event.Skip();
 }
 

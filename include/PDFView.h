@@ -16,6 +16,7 @@
 #include <wx/print.h>
 
 #include <istream>
+#include "PDFReviewSearcher.h"
 
 class wxPDFViewImpl;
 
@@ -227,6 +228,12 @@ public:
 	void SetOrientation(wxPDFViewPageOrientation orientation);
 
 	wxPDFViewPageOrientation GetOrientation() const;
+    
+    /**
+     Reviews the PDF for improper markings
+     **/
+    long ReviewPDF();
+    wxVector<Review>&  GetReviewResults(); //fetches result
 
 private:
 	wxPDFViewImpl* m_impl;
