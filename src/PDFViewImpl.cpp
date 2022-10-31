@@ -1641,7 +1641,14 @@ long wxPDFViewImpl::ReviewPDF() {
     review.description = "Find research";
     review.errorText = "Research noted ";
     reviews.push_back(review);
+    
+    review.searchString = "the";
+    review.description = "Find the";
+    review.errorText = "the noted ";
+    reviews.push_back(review);
 
+    
+    
     //for each page
     for (int page = 0;page != GetPageCount(); ++page) {
         for (Review *review = reviews.begin(); review != reviews.end(); ++review) {

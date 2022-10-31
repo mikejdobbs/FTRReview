@@ -15,7 +15,7 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     m_pdfView = NULL;
     
     AppendToggleColumn( "Toggle", wxDATAVIEW_CELL_ACTIVATABLE,10,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
-    AppendTextColumn( "Page", wxDATAVIEW_CELL_ACTIVATABLE,10,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
+    AppendTextColumn( "Page", wxDATAVIEW_CELL_ACTIVATABLE,25,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
     AppendTextColumn( "Issue" );
     
     wxVector<wxVariant> data;
@@ -29,7 +29,7 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     data.push_back( wxVariant("4") );
     data.push_back( wxVariant("Ham Burger") );
     AppendItem( data );
-
+    
     
     Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PDFViewReviewCtrl::OnSelectionChanged, this);
     Bind(wxEVT_SIZE, &PDFViewReviewCtrl::OnSize, this);
@@ -75,14 +75,15 @@ void PDFViewReviewCtrl::OnSelectionChanged(wxDataViewEvent& event)
 
 void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
 {
-#ifdef __WXOSX__
-    AssociateModel(NULL);
-#else
-    // Workaround for potential bug in generic dataview impl
-    wxObjectDataPtr<wxPDFViewBookmarksModel> treeModel(new wxPDFViewBookmarksModel(NULL));
-    AssociateModel(treeModel.get());
-#endif
-
+    return;
+//#ifdef __WXOSX__
+//    AssociateModel(NULL);
+//#else
+//    // Workaround for potential bug in generic dataview impl
+//    wxObjectDataPtr<wxPDFViewBookmarksModel> treeModel(new wxPDFViewBookmarksModel(NULL));
+//    AssociateModel(treeModel.get());
+//#endif
+//
     event.Skip();
 }
 
@@ -101,10 +102,10 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
             wxPrintf("Found match on page %s", pageNumber);
             
             wxVector<wxVariant> data;
-//            data.push_back( wxVariant(true) );
-//            data.push_back( wxVariant(pageNumber) );
-//            data.push_back( wxVariant(review->description) );
-//            AppendItem( data );
+            data.push_back( wxVariant(true) );
+            data.push_back( wxVariant(pageNumber) );
+            data.push_back( wxVariant(review->description) );
+            AppendItem( data );
 
         } //end search for review
 
