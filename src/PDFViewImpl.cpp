@@ -1656,7 +1656,7 @@ long wxPDFViewImpl::ReviewPDF() {
         } //end search for review
 
     } //end review of each page
-
+    
     return 0;
 }
 
@@ -1699,4 +1699,5 @@ long wxPDFViewImpl::ReviewPage(const int pageIndex, Review *review) {
     return resultCount;
     
 }
+
 

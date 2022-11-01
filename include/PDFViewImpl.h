@@ -130,7 +130,10 @@ public:
     wxVector<Review> reviews; //holds each review we are looking for.
     long ReviewPDF(); //runs review populating the Match vector in each review variables
     
+    void SetSelection(wxVector<wxPDFViewTextRange>  range)  { m_selection = range; } //TODO:Remove as not used
+    void SetSelection(wxPDFViewTextRange range)  { m_selection.push_back(range); }
 
+    void clearSelections() { m_selection.clear(); }
 private:
 	wxPDFView* m_ctrl;
 	wxPDFViewBookmarks* m_bookmarks;

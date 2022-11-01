@@ -7,6 +7,7 @@
 
 #include "PDFViewReviewCtrl.h"
 #include "PDFViewPages.h"
+#include "PDFViewImpl.h"
 
 bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     if ( !wxDataViewListCtrl::Create( parent, id ) )
@@ -57,6 +58,7 @@ void PDFViewReviewCtrl::OnSelectionChanged(wxDataViewEvent& event)
     rowText.ToInt(&pageNumber);
     
     m_pdfView->GoToPage(pageNumber - 1); //pages are 0-indexed
+    
     event.Skip();
 }
 
@@ -70,6 +72,10 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
 {
     //Review TODO:Multithreaded?
     m_pdfView->ReviewPDF();
+    
+    m_pdfView->GetImpl()->clearSelections();
+    
+    
 
     //TODO: Cleanup
     std::vector<ReviewResult> results = m_pdfView->GetReviewResultSortedByPage();
@@ -84,6 +90,8 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
             data.push_back( wxVariant(pageNumber) );
             data.push_back( wxVariant(result->review.description) );
             AppendItem( data );
+        
+        m_pdfView->GetImpl()->SetSelection(result->match);
 
     } //end search for review
 
