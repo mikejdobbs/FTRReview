@@ -18,19 +18,6 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     AppendTextColumn( "Page", wxDATAVIEW_CELL_ACTIVATABLE,25,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
     AppendTextColumn( "Issue" );
     
-    wxVector<wxVariant> data;
-    data.push_back( wxVariant(true) );
-    data.push_back( wxVariant("1") );
-    data.push_back( wxVariant("Ham") );
-    AppendItem( data );
-    data.clear();
-
-    data.push_back( wxVariant(true) );
-    data.push_back( wxVariant("4") );
-    data.push_back( wxVariant("Ham Burger") );
-    AppendItem( data );
-    
-    
     Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PDFViewReviewCtrl::OnSelectionChanged, this);
     Bind(wxEVT_SIZE, &PDFViewReviewCtrl::OnSize, this);
 
@@ -69,21 +56,13 @@ void PDFViewReviewCtrl::OnSelectionChanged(wxDataViewEvent& event)
     int pageNumber;
     rowText.ToInt(&pageNumber);
     
-    m_pdfView->GoToPage(pageNumber);
+    m_pdfView->GoToPage(pageNumber - 1); //pages are 0-indexed
     event.Skip();
 }
 
 void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
 {
     return;
-//#ifdef __WXOSX__
-//    AssociateModel(NULL);
-//#else
-//    // Workaround for potential bug in generic dataview impl
-//    wxObjectDataPtr<wxPDFViewBookmarksModel> treeModel(new wxPDFViewBookmarksModel(NULL));
-//    AssociateModel(treeModel.get());
-//#endif
-//
     event.Skip();
 }
 
@@ -93,21 +72,18 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
     m_pdfView->ReviewPDF();
 
     //TODO: Cleanup
-    wxVector<Review> reviews = m_pdfView->GetReviewResults();
-    for (Review *review = reviews.begin(); review != reviews.end(); ++review) {
-        for (wxPDFViewTextRange *match = review->matches.begin(); match != review->matches.end(); ++match) {
-            //TODO FIXconst
+    std::vector<ReviewResult> results = m_pdfView->GetReviewResultSortedByPage();
+    for (std::vector<ReviewResult>::iterator result = results.begin(); result != results.end(); ++result) {
+        
             wxString pageNumber;
-            pageNumber << match->GetPage()->GetIndex();
-            wxPrintf("Found match on page %s", pageNumber);
-            
+            pageNumber << result->page;
+
+        
             wxVector<wxVariant> data;
             data.push_back( wxVariant(true) );
             data.push_back( wxVariant(pageNumber) );
-            data.push_back( wxVariant(review->description) );
+            data.push_back( wxVariant(result->review.description) );
             AppendItem( data );
-
-        } //end search for review
 
     } //end search for review
 

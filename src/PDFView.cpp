@@ -192,6 +192,33 @@ wxVector<Review>&  wxPDFView::GetReviewResults() {
     return m_impl->reviews;
 }
 
+// Compares two ReviewResult;  used for sorting
+bool compareReviewResult(ReviewResult i1, ReviewResult i2)
+{
+    return (i1.page < i2.page); //TODO: Also sort on the locatio of text on page order
+}
+
+std::vector<ReviewResult> wxPDFView::GetReviewResultSortedByPage() {
+    //create results vector
+    std::vector<ReviewResult> results;
+    for (Review *review = m_impl->reviews.begin(); review != m_impl->reviews.end(); ++review) {
+        for (wxPDFViewTextRange *match = review->matches.begin(); match != review->matches.end(); ++match) {
+                
+            ReviewResult result(
+            match->GetPage()->GetIndex() + 1, //add one here so it is 1-indexed instead of 0-indexed
+            *review,
+             *match);
+            results.push_back(result);
+        } //end search for review
+
+    } //end search for review
+    
+    //sort
+    std::sort(results.begin(), results.end(), compareReviewResult);
+    
+    return  results;
+}
+
 bool wxPDFView::IsPrintAllowed() const
 {
 	if (m_impl)

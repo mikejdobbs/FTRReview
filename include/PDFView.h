@@ -233,7 +233,8 @@ public:
      Reviews the PDF for improper markings
      **/
     long ReviewPDF();
-    wxVector<Review>&  GetReviewResults(); //fetches result
+    wxVector<Review>&  GetReviewResults();
+    std::vector<ReviewResult> GetReviewResultSortedByPage();
 
 private:
 	wxPDFViewImpl* m_impl;
