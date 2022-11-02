@@ -70,7 +70,6 @@ void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
 
 void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
 {
-    //Review TODO:Multithreaded?
     m_pdfView->ReviewPDF();
     
     m_pdfView->GetImpl()->clearSelections();
@@ -95,6 +94,7 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
 
     } //end search for review
 
+    
     event.Skip();
 }
 

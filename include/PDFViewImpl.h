@@ -128,6 +128,7 @@ public:
     
     //Reviews
     wxVector<Review> reviews; //holds each review we are looking for.
+    std::vector<ReviewResult> results; //holds page ordered listing or review results -- shown in side bar
     long ReviewPDF(); //runs review populating the Match vector in each review variables
     
     void SetSelection(wxVector<wxPDFViewTextRange>  range)  { m_selection = range; } //TODO:Remove as not used

@@ -94,6 +94,11 @@ bool wxPDFViewDocumentFrame::Create(wxWindow* parent,
 	docPanelSizer->Fit( m_docPanel );
 	m_splitter->SplitVertically( m_navPanel, m_docPanel, 220 );
 	mainSizer->Add( m_splitter, 1, wxEXPAND, 5 );
+    
+    textOutputCTRL = new wxTextCtrl(this,wxID_ANY, wxString("Ham Found!"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,wxTextCtrlNameStr);
+    textOutputCTRL->SetMinSize(wxSize(300,300));
+    mainSizer->Add( textOutputCTRL,0,wxFIXED_MINSIZE,5);
+
 
 	SetSizerAndFit( mainSizer );
 	SetSize(900, 600);

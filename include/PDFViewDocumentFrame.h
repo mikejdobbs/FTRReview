@@ -92,6 +92,8 @@ protected:
 
 	wxSearchCtrl* m_searchCtrl;
 	wxTextCtrl* m_pageTxtCtrl;
+    wxTextCtrl *textOutputCTRL;
+
 	wxStaticText* m_pageCountTxtCtrl;
 	wxComboBox* m_zoomComboBox;
 	wxString m_fileName;
