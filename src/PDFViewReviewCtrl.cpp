@@ -68,10 +68,21 @@ void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
     event.Skip();
 }
 
+//gets text from review.
+wxString PDFViewReviewCtrl::GetReviewTextResult() {
+    wxString result; //used to hold all responses
+    //iterate thorugh all reviews collecting all results
+    wxVector<Review> reviews = m_pdfView->GetReviewResults();
+    for (wxVector<Review>::iterator review = reviews.begin(); review != reviews.end(); ++review) {
+        result << review->GetReviewTextResult() << "\n";
+    } //end for each review
+
+    return result;
+}
+
 void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
 {
     m_pdfView->ReviewPDF();
-    
     m_pdfView->GetImpl()->clearSelections();
     
     
@@ -94,6 +105,9 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
 
     } //end search for review
 
+    //populate widnow
+    textOutputCTRL->Clear();
+    textOutputCTRL->WriteText(GetReviewTextResult());
     
     event.Skip();
 }

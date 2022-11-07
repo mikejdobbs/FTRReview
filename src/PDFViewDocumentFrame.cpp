@@ -96,8 +96,8 @@ bool wxPDFViewDocumentFrame::Create(wxWindow* parent,
 	mainSizer->Add( m_splitter, 1, wxEXPAND, 5 );
     
     textOutputCTRL = new wxTextCtrl(this,wxID_ANY, wxString("Ham Found!"),wxDefaultPosition,wxDefaultSize,0,wxDefaultValidator,wxTextCtrlNameStr);
-    textOutputCTRL->SetMinSize(wxSize(300,300));
-    mainSizer->Add( textOutputCTRL,0,wxFIXED_MINSIZE,5);
+    textOutputCTRL->SetMinSize(wxSize(300,100));
+    mainSizer->Add( textOutputCTRL,0,wxEXPAND,5);
 
 
 	SetSizerAndFit( mainSizer );
@@ -195,6 +195,7 @@ bool wxPDFViewDocumentFrame::Create(wxWindow* parent,
 	//m_pdfViewBookmarksCtrl->SetPDFView(m_pdfView);
     
     m_pdfViewReviewsCtrl->SetPDFView(m_pdfView);
+    m_pdfViewReviewsCtrl->SetTextOutput(textOutputCTRL);
 	m_thumbnailListBox->SetPDFView(m_pdfView);
 
 	UpdateSearchControls();

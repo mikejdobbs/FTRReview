@@ -1646,12 +1646,12 @@ long wxPDFViewImpl::ReviewPDF() {
     Review review;
     review.searchString = "research";
     review.description = "Find research";
-    review.errorText = "Research noted ";
+    review.errorText = "Research noted on pages $(PAGES).";
     reviews.push_back(review);
     
     review.searchString = "the";
     review.description = "Find the";
-    review.errorText = "the noted ";
+    review.errorText = "the noted on pages $(PAGES).";
     reviews.push_back(review);
 
     
@@ -1680,7 +1680,6 @@ long wxPDFViewImpl::ReviewPDF() {
     
     //sort
     std::sort(results.begin(), results.end(), compareReviewResult);
-    
     
     return 0;
 }
