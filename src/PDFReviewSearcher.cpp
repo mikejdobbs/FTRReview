@@ -5,140 +5,161 @@
 //  Created by Michael Dobbs on 10/28/22.
 //
 
+#include <wx/regex.h>
+
+#include "PDFViewImpl.h"
 #include "PDFReviewSearcher.h"
+#include "PDFViewPages.h"
 
-void PDFReviewSearcher::StopFind()
-{
-    m_selection.clear();
-    m_findResults.clear();
-    m_nextPageToSearch = -1;
-    m_lastPageToSearch = -1;
-    m_lastCharacterIndexToSearch = -1;
-    m_currentFindIndex = -1;
-    m_findText.clear();
-}
-
-long PDFReviewSearcher::Find(const wxString& text, int flags)
-{
-    if (m_pages.empty())
-        return wxNOT_FOUND;
-
-    bool firstSearch = false;
-    int characterToStartSearchingFrom = 0;
-    if (m_findText != text) // First time we search for this text.
-    {
-        firstSearch = true;
-        wxVector<wxPDFViewTextRange> oldSelection = m_selection;
-        StopFind();
-        m_findText = text;
-
-        if (m_findText.empty())
-            return wxNOT_FOUND;
-
-        if (oldSelection.empty()) {
-            // Start searching from the beginning of the document.
-            m_nextPageToSearch = -1;
-            m_lastPageToSearch = GetPageCount() - 1;
-            m_lastCharacterIndexToSearch = -1;
-        } else {
-            // There's a current selection, so start from it.
-            m_nextPageToSearch = oldSelection[0].GetPage()->GetIndex();
-            m_lastCharacterIndexToSearch = oldSelection[0].GetCharIndex();
-            characterToStartSearchingFrom = oldSelection[0].GetCharIndex();
-            m_lastPageToSearch = m_nextPageToSearch;
+wxString Review::GetReviewTextResult() {
+    //add page numbers
+    wxString pages;
+    for(auto reviewSearch : reviewSearches) {
+        for(auto match : reviewSearch.matches) {
+            pages << (match.GetPage()->GetIndex() + 1)  << ",";
         }
     }
-
-    if (m_findText.empty())
-        return wxNOT_FOUND;
-
-    bool caseSensitive = flags & wxPDFVIEW_FIND_MATCH_CASE;
-    bool forward = (flags & wxPDFVIEW_FIND_BACKWARDS) == 0;
-
-    // Move the find index
-    if (forward)
-        ++m_currentFindIndex;
-    else
-        --m_currentFindIndex;
-
-    // Determine if we need more results
-    bool needMoreResults = true;
-    if (m_currentFindIndex == static_cast<int>(m_findResults.size()))
-        m_nextPageToSearch++;
-    else if (m_currentFindIndex < 0)
-        m_nextPageToSearch--;
-    else
-        needMoreResults = false;
-
-    while (needMoreResults
-        && m_nextPageToSearch < GetPageCount()
-        && m_nextPageToSearch >= 0)
-    {
-        int resultCount = FindOnPage(m_nextPageToSearch, caseSensitive, firstSearch, characterToStartSearchingFrom);
-        if (resultCount)
-            needMoreResults = false;
-        else if (forward)
-            ++m_nextPageToSearch;
-        else
-            --m_nextPageToSearch;
-    }
-
-    if (m_findResults.empty())
-        return wxNOT_FOUND;
-
-    // Wrap find index
-    if (m_currentFindIndex < 0)
-        m_currentFindIndex = m_findResults.size() - 1;
-    else if (m_currentFindIndex >= (int) m_findResults.size())
-        m_currentFindIndex = 0;
-
-    // Select result
-    m_selection.clear();
-    wxPDFViewTextRange result = m_findResults[m_currentFindIndex];
-    m_selection.push_back(result);
-    int resultPageIndex = result.GetPage()->GetIndex();
-    // Make selection visible
-
-
-    return m_findResults.size();
+    //page.replace
+    
+    return errorText; 
 }
 
-int PDFReviewSearcher::FindOnPage(int pageIndex, bool caseSensitive, bool firstSearch, int WXUNUSED(characterToStartSearchingFrom))
-{
-    // Find all the matches in the current page.
-    unsigned long flags = caseSensitive ? FPDF_MATCHCASE : 0;
-    wxMBConvUTF16LE conv;
-    FPDF_SCHHANDLE find = FPDFText_FindStart(
-        m_pages[pageIndex].GetTextPage(),
-#ifdef __WXMSW__
-        reinterpret_cast<FPDF_WIDESTRING>(m_findText.wc_str(conv)),
-#else
-        reinterpret_cast<FPDF_WIDESTRING>((const char*)m_findText.mb_str(conv)),
-#endif
-        flags, 0);
-
-    wxPDFViewPage& page = m_pages[pageIndex];
-
-    int resultCount = 0;
-    while (FPDFText_FindNext(find))
-    {
-        wxPDFViewTextRange result(&page,
-            FPDFText_GetSchResultIndex(find),
-            FPDFText_GetSchCount(find));
-
-        if (!firstSearch &&
-            m_lastCharacterIndexToSearch != -1 &&
-            result.GetPage()->GetIndex() == m_lastPageToSearch &&
-            result.GetCharIndex() >= m_lastCharacterIndexToSearch)
-        {
-          break;
+wxString Review::GetPagesForReviewSearch(const ReviewSearch &reviewSearch) {
+    wxString response;
+    int lastPageIndex = 0;
+    for (auto match: reviewSearch.matches ) {
+        int pageIndex = match.GetPage()->GetIndex() + 1;
+        
+        //skip pages that have already been listed
+        if (lastPageIndex == pageIndex) {
+            continue;
         }
-
-        //AddFindResult(result);
-        ++resultCount;
+        
+        if (response.length() > 0) {
+            response += ", ";
+        }
+        
+        response << pageIndex;
+        lastPageIndex = pageIndex;
     }
-
-    FPDFText_FindClose(find);
-
-    return resultCount;
+    return response;
 }
+
+ReviewForInventionPatent::ReviewForInventionPatent() {
+    reviewSearches.push_back(ReviewSearch("invention",wxString("Possible Unreported Invention")));
+    reviewSearches.push_back(ReviewSearch("patent",wxString("Possible Unreported Patent")));
+    reviewSearches.push_back(ReviewSearch("USPTO",wxString("Possible Unreported Patent")));
+    
+
+}
+
+//called before searching for matches
+void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
+    
+    //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
+    wxRegEx patentAppRE("\\d{2,2}\\/\\d{3,3},*\\d{3,3}"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
+    wxString processText = pageText;
+    while ( patentAppRE.Matches(processText) ) {
+        // Find the size of the first match and print it.
+            size_t start, len;
+            patentAppRE.GetMatch(&start, &len, 0);
+            const wxString appNumberText = patentAppRE.GetMatch(processText,0);
+            std::cout << "PatentApp: " << appNumberText;
+            reviewSearches.push_back(ReviewSearch(appNumberText,wxString("Possible Unreported Patent")));
+            processText = processText.Mid (start + len); //keep movingt to make sure we got all the text
+    }
+    
+    
+    //7,123,456 numbers to flag
+    wxRegEx patentRE("\\d{1,2},*\\d{3,3},*\\d{3,3}");
+    processText = pageText;
+    while ( patentRE.Matches(processText) ) {
+        // Find the size of the first match and print it.
+            size_t start, len;
+            patentRE.GetMatch(&start, &len, 0);
+            const wxString patentNumberText = patentRE.GetMatch(processText,0);
+            std::cout << "Patent: " << patentNumberText;
+            reviewSearches.push_back(ReviewSearch(patentNumberText,wxString("Possible Unreported Patent")));
+            processText = processText.Mid (start + len); //keep movingt to make sure we got all the text
+    }
+}
+
+wxString ReviewForInventionPatent::GetReviewTextResult() {
+    //Agregate all matched text together
+    wxString response;
+    
+    for (auto &reviewSearch : reviewSearches) {
+        if (!reviewSearch.matches.empty()) {
+            response << "Please confirm all subject invetions have been reported to DOE via iEdison as the use of " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  " indicate a potential subject invention.\n";
+        }
+        
+    }
+    return response;
+}
+
+
+//Protective Markings
+
+ReviewForProtectiveMarkings::ReviewForProtectiveMarkings() {
+    reviewSearches.push_back(ReviewSearch("proprietary",wxString("Proprietary")));
+    reviewSearches.push_back(ReviewSearch("export",wxString("Export Control")));
+    reviewSearches.push_back(ReviewSearch("limited rights",wxString("Limited Rights")));
+    reviewSearches.push_back(ReviewSearch("restricted rights",wxString("Restricted Rights")));
+    reviewSearches.push_back(ReviewSearch("classified",wxString("Classified")));
+    reviewSearches.push_back(ReviewSearch("secret",wxString("secret")));
+    reviewSearches.push_back(ReviewSearch("confidential",wxString("Confidential")));
+    reviewSearches.push_back(ReviewSearch("business sensitive",wxString("Business Sensitive")));
+    reviewSearches.push_back(ReviewSearch("trade secret",wxString("Trade Secret")));
+
+}
+
+//called before searching for matches -- Nothing to do yet for protective markings
+void ReviewForProtectiveMarkings::PreReviewPage(wxString pageText) {
+    
+}
+
+wxString ReviewForProtectiveMarkings::GetReviewTextResult() {
+    //Agregate all matched text together
+    wxString response;
+    
+    for (auto &reviewSearch : reviewSearches) {
+        if (!reviewSearch.matches.empty()) {
+            response << "Please remove the unauthorized use of " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  ".\n";
+        }
+        
+    }
+    return response;
+}
+
+
+//reviewforCopyright
+ReviewForCopyright::ReviewForCopyright() {
+    reviewSearches.push_back(ReviewSearch("(c)",wxString("Copyright")));
+    reviewSearches.push_back(ReviewSearch("copyright",wxString("Copyright")));
+}
+
+wxString ReviewForCopyright::GetReviewTextResult() {
+    wxString response;
+    
+    for (auto &reviewSearch : reviewSearches) {
+        if (!reviewSearch.matches.empty()) {
+            response << "Please remove " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  " or add the following Acknowldegement of the Govenrment license.\n";
+            response << "Acknowledgement of Government Support and Government License\nThis work was generated with financial support from the U.S. Government through Contract/Award No. __________________, and as such the U.S. Government retains a paid-up, nonexclusive, irrevocable, world-wide license to reproduce, prepare derivative works, distribute copies to the public, and display publicly, by or on behalf of the Government, this work in whole or in part, or otherwise use the work for Federal purposes.";
+        } //end if match
+    }//end for
+    return response;
+}
+
+//called before searching for matches
+void ReviewForCopyright::PreReviewPage(wxString pageText) {
+    //match to Copyright or (C), show error if no legend
+    //match legend on page
+    const wxString copyrightLegend = "U.S. Government retains a paid-up, nonexclusive, irrevocable, world-wide license to reproduce, prepare derivative works, distribute copies to the public, and display publicly, by or on behalf of the Government, this work in whole or in part, or otherwise use the work for Federal purposes.";
+
+    if (pageText.Find(copyrightLegend) != wxNOT_FOUND) {
+        reviewSearches.clear(); //no copyright issues if there is a legend
+    }
+    
+    
+}
+

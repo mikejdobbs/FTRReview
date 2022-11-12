@@ -70,6 +70,29 @@ FPDF_TEXTPAGE wxPDFViewPage::GetTextPage()
 	return m_textPage;
 }
 
+wxString wxPDFViewPage::GetwxString()
+{
+    FPDF_TEXTPAGE text_page = GetTextPage();
+    unsigned short *buffer;
+    const int count = FPDFText_CountChars(text_page);
+    
+    if (count < 1) {
+        return wxString("");
+    }
+    //if we have a count, grab thge buffer
+    buffer = (unsigned short *) malloc(sizeof(unsigned short) * (count + 1) * 2 ); //*2 as these are 2 byte words
+    int retlen = FPDFText_GetText(text_page, 0, count, buffer);
+
+    //convert to wxString
+    wxMBConvUTF16LE converter;
+    wxString result((const char *)buffer, converter);
+    
+    //free buffer
+    free (buffer);
+    return result;
+}
+
+
 wxRect wxPDFViewPage::PageToScreen(const wxRect& pageRect, double left, double top, double right, double bottom)
 {
 

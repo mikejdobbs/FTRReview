@@ -127,7 +127,7 @@ public:
 	void ExecuteNamedAction(const wxString& action);
     
     //Reviews
-    wxVector<Review> reviews; //holds each review we are looking for.
+    wxVector<wxSharedPtr<Review> > reviews; //holds each review we are looking for.
     std::vector<ReviewResult> results; //holds page ordered listing or review results -- shown in side bar
     long ReviewPDF(); //runs review populating the Match vector in each review variables
     
@@ -241,8 +241,8 @@ private:
 
 	static void ReleaseSDK();
 
-    long ReviewPage(const int pageIndex, Review *review);
-
+    void ReviewPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Review *review);
+    long SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch &reviewSearch);
 	friend class wxPDFViewPrintout;
     
 };

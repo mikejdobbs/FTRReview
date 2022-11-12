@@ -36,6 +36,8 @@ public:
 	void Unload();
 
 	FPDF_PAGE GetPage();
+    
+    wxString GetwxString();
 
 	FPDF_TEXTPAGE GetTextPage();
 

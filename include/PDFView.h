@@ -233,7 +233,7 @@ public:
      Reviews the PDF for improper markings
      **/
     long ReviewPDF();
-    wxVector<Review>&  GetReviewResults();
+    wxVector<wxSharedPtr<Review>>  * GetReviewResults();
     std::vector<ReviewResult> GetReviewResultSortedByPage();
 
 private:

@@ -188,8 +188,8 @@ long wxPDFView::ReviewPDF()
         return wxNOT_FOUND;
 }
 
-wxVector<Review>&  wxPDFView::GetReviewResults() {
-    return m_impl->reviews;
+wxVector<wxSharedPtr<Review>> *wxPDFView::GetReviewResults() {
+    return &m_impl->reviews;
 }
 
 std::vector<ReviewResult> wxPDFView::GetReviewResultSortedByPage() {

@@ -1643,39 +1643,36 @@ long wxPDFViewImpl::ReviewPDF() {
     //Add test reviews
     reviews.clear();
     
-    Review review;
-    review.searchString = "research";
-    review.description = "Find research";
-    review.errorText = "Research noted on pages $(PAGES).";
-    reviews.push_back(review);
-    
-    review.searchString = "the";
-    review.description = "Find the";
-    review.errorText = "the noted on pages $(PAGES).";
-    reviews.push_back(review);
+    reviews.push_back(wxSharedPtr<Review> (new ReviewForInventionPatent()));
+    reviews.push_back(wxSharedPtr<Review> (new ReviewForCopyright()));
+    reviews.push_back(wxSharedPtr<Review> (new ReviewForProtectiveMarkings()));
 
-    
-    
     //for each page
-    for (int page = 0;page != GetPageCount(); ++page) {
-        for (Review *review = reviews.begin(); review != reviews.end(); ++review) {
-            ReviewPage(page, review);
+    for (int pageIndex = 0;pageIndex != GetPageCount(); ++pageIndex) {
+        const wxString pageWxString = m_pages[pageIndex].GetwxString();
+        const FPDF_TEXTPAGE pageText = m_pages[pageIndex].GetTextPage();
+        
+        wxLogDebug(pageWxString);
+        for (auto review: reviews) {
+            review->PreReviewPage(pageWxString);
+            ReviewPage(m_pages[pageIndex], pageText, review.get());
         } //end search for review
 
     } //end review of each page
     
     //now populate results used for display
     results.clear();
-    for (Review *review = reviews.begin(); review != reviews.end(); ++review) {
-        for (wxPDFViewTextRange *match = review->matches.begin(); match != review->matches.end(); ++match) {
-                
-            ReviewResult result(
-            match->GetPage()->GetIndex() + 1, //add one here so it is 1-indexed instead of 0-indexed
-            *review,
-             *match);
-            results.push_back(result);
-        } //end search for review
-
+    for (auto review : reviews)  {
+        for(auto reviewSearch : review->reviewSearches) {
+            for(auto match : reviewSearch.matches) {
+                ReviewResult result(
+                                    match.GetPage()->GetIndex() + 1, //add one here so it is 1-indexed instead of 0-indexed
+                                    reviewSearch.description,
+                                    *review.get(),
+                                    match);
+                results.push_back(result);
+            } //end search for review
+        }//end for loop for reviewSearch
     } //end search for review
     
     //sort
@@ -1684,11 +1681,17 @@ long wxPDFViewImpl::ReviewPDF() {
     return 0;
 }
 
-long wxPDFViewImpl::ReviewPage(const int pageIndex, Review *review) {
-    
-    if (m_pages.empty())
-        return wxNOT_FOUND;
 
+void wxPDFViewImpl::ReviewPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Review *review) {
+    
+    for(auto &reviewSearch : review->reviewSearches) {
+        SearchPage(page, pageText,reviewSearch);
+    }
+    
+}
+
+long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch &reviewSearch) {
+    
     bool firstSearch = false;
     int characterToStartSearchingFrom = 0;
 
@@ -1698,23 +1701,21 @@ long wxPDFViewImpl::ReviewPage(const int pageIndex, Review *review) {
     wxMBConvUTF16LE conv;
     
     FPDF_SCHHANDLE find = FPDFText_FindStart(
-        m_pages[pageIndex].GetTextPage(),
+     pageText,
 #ifdef __WXMSW__
         reinterpret_cast<FPDF_WIDESTRING>(review.searchString.wc_str(conv)),
 #else
-        reinterpret_cast<FPDF_WIDESTRING>((const char*)review->searchString.mb_str(conv)),
+     reinterpret_cast<FPDF_WIDESTRING>((const char*)reviewSearch.searchString.mb_str(conv)),
 #endif
         flags, 0);
     
-
-    wxPDFViewPage& page = m_pages[pageIndex]; //TODO: Not sure why this isn't a const
 
     int resultCount = 0;
     while (FPDFText_FindNext(find))
     {
         //add all matches to the review.matchs vector
         const wxPDFViewTextRange result(&page,FPDFText_GetSchResultIndex(find),FPDFText_GetSchCount(find));
-        review->matches.push_back(result);
+        reviewSearch.matches.push_back(result);
         ++resultCount;
     }
 

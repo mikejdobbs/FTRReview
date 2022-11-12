@@ -72,9 +72,8 @@ void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
 wxString PDFViewReviewCtrl::GetReviewTextResult() {
     wxString result; //used to hold all responses
     //iterate thorugh all reviews collecting all results
-    wxVector<Review> reviews = m_pdfView->GetReviewResults();
-    for (wxVector<Review>::iterator review = reviews.begin(); review != reviews.end(); ++review) {
-        result << review->GetReviewTextResult() << "\n";
+    for(auto reviewPtr : * m_pdfView->GetReviewResults() ) {
+        result << reviewPtr->GetReviewTextResult();
     } //end for each review
 
     return result;
@@ -98,7 +97,7 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
             wxVector<wxVariant> data;
             data.push_back( wxVariant(true) );
             data.push_back( wxVariant(pageNumber) );
-            data.push_back( wxVariant(result->review.description) );
+            data.push_back( wxVariant(result->description) );
             AppendItem( data );
         
         m_pdfView->GetImpl()->SetSelection(result->match);
