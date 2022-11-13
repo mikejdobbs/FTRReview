@@ -627,7 +627,7 @@ void wxPDFViewImpl::OnPaint(wxPaintEvent& WXUNUSED(event))
 		}
 	}
 
-	// Draw text selections
+	// Draw text find selections
 	gc->SetBrush(wxColor(0, 0, 200, 50));
 	gc->SetPen(*wxTRANSPARENT_PEN);
 
@@ -648,7 +648,55 @@ void wxPDFViewImpl::OnPaint(wxPaintEvent& WXUNUSED(event))
 				}
 			}
 		}
-	}
+	} //end find selections
+    
+    // Draw text review selections
+    gc->SetBrush(wxColor(255, 255, 0, 75));
+    gc->SetPen(*wxTRANSPARENT_PEN);
+
+    for (auto it = reviewSelections.begin(); it != reviewSelections.end(); ++it)
+    {
+        int pageIndex = it->GetPage()->GetIndex();
+        if (IsPageVisible(pageIndex))
+        {
+            wxRect pageRect = m_pageRects[pageIndex];
+            if (pageRect.Intersects(rectUpdate))
+            {
+                // Screen rects are relative to the page
+                wxVector<wxRect> screenRects = it->GetScreenRects(m_pageRects[pageIndex]);
+                for (auto sr = screenRects.begin(); sr != screenRects.end(); ++sr)
+                {
+                    sr->Offset(m_pageRects[pageIndex].GetPosition());
+                    gc->DrawRectangle(sr->x, sr->y, sr->width, sr->height);
+                }
+            }
+        }
+    } //end find reviews
+    
+    
+    // Draw text the review selected
+    gc->SetBrush(wxColor(255, 0, 0, 75));
+    gc->SetPen(*wxTRANSPARENT_PEN);
+
+    if (reviewSelected != nullptr) {
+        int pageIndex = reviewSelected->GetPage()->GetIndex();
+        if (IsPageVisible(pageIndex))
+        {
+            wxRect pageRect = m_pageRects[pageIndex];
+            if (pageRect.Intersects(rectUpdate))
+            {
+                // Screen rects are relative to the page
+                wxVector<wxRect> screenRects = reviewSelected->GetScreenRects(m_pageRects[pageIndex]);
+                for (auto sr = screenRects.begin(); sr != screenRects.end(); ++sr)
+                {
+                    sr->Offset(m_pageRects[pageIndex].GetPosition());
+                    gc->DrawRectangle(sr->x, sr->y, sr->width, sr->height);
+                }
+            }
+        } //end if
+    } // end if page
+
+            
 }
 
 void wxPDFViewImpl::OnSize(wxSizeEvent& event)
@@ -1694,7 +1742,6 @@ long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Revi
     
     bool firstSearch = false;
     int characterToStartSearchingFrom = 0;
-
 
     // Find all the matches in the current page.
     unsigned long flags = 0;

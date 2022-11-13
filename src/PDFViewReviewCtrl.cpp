@@ -60,6 +60,11 @@ void PDFViewReviewCtrl::OnSelectionChanged(wxDataViewEvent& event)
     
     m_pdfView->GoToPage(pageNumber - 1); //pages are 0-indexed
     
+    //select
+    wxPDFViewTextRange * selected = (wxPDFViewTextRange *) GetItemData(RowToItem(rowID));
+    m_pdfView->GetImpl()->SetReviewSelected(selected);
+    m_pdfView->Refresh();
+    
     event.Skip();
 }
 
@@ -119,7 +124,7 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
             data.push_back( wxVariant(result->description) );
             AppendItem( data, (wxUIntPtr) result->match );
         
-            m_pdfView->GetImpl()->SetSelection(*result->match);
+            m_pdfView->GetImpl()->SetReviewSelection(*result->match);
 
     } //end search for review
 

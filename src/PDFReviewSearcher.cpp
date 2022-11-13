@@ -69,8 +69,6 @@ ReviewForInventionPatent::ReviewForInventionPatent() {
     reviewSearches.push_back(ReviewSearch("invention",wxString("Possible Unreported Invention")));
     reviewSearches.push_back(ReviewSearch("patent",wxString("Possible Unreported Patent")));
     reviewSearches.push_back(ReviewSearch("USPTO",wxString("Possible Unreported Patent")));
-    
-
 }
 
 //called before searching for matches

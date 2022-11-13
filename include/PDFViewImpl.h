@@ -132,7 +132,8 @@ public:
     long ReviewPDF(); //runs review populating the Match vector in each review variables
     
     //void SetSelection(wxVector<wxPDFViewTextRange>  range)  { m_selection = range; } //TODO:Remove as not used
-    void SetSelection(wxPDFViewTextRange range)  { m_selection.push_back(range); }
+    void SetReviewSelection(wxPDFViewTextRange range)  { reviewSelections.push_back(range); }
+    void SetReviewSelected(wxPDFViewTextRange *range)  { reviewSelected = range; }
 
     void clearSelections() { m_selection.clear(); }
     
@@ -247,6 +248,8 @@ private:
 
     void ReviewPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Review *review);
     long SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch &reviewSearch);
+    wxVector<wxPDFViewTextRange> reviewSelections; //highlight with all reviews
+    wxPDFViewTextRange *reviewSelected =nullptr; //highlight as the selecgted review
 	friend class wxPDFViewPrintout;
     
 };
