@@ -68,7 +68,7 @@ public:
 			array.Add( wxDataViewItem( (void*) pChildBM ) );
 		}
 
-		return bm->size();
+		return (unsigned int) bm->size();
 	}
 
 	void PrepareCtrl(wxDataViewCtrl* dataView)

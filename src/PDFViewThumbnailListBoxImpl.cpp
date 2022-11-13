@@ -104,5 +104,5 @@ void wxPDFViewThumbnailListBoxImpl::OnSelectionChanged(wxCommandEvent& event)
 
 void wxPDFViewThumbnailListBoxImpl::UpdateVisiblePages()
 {
-	SetVisiblePages(m_ctrl->GetVisibleBegin(), m_ctrl->GetVisibleEnd());
+	SetVisiblePages((int) m_ctrl->GetVisibleBegin(), (int) m_ctrl->GetVisibleEnd());
 }

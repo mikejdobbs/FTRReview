@@ -76,7 +76,7 @@ void wxPDFViewThumbnailListBox::OnDrawItem(wxDC& dc, const wxRect& rect, size_t 
 	pageDrawRect.height -= dc.GetCharHeight();
 
 	if (m_impl)
-		m_impl->DrawPage(dc, pageDrawRect, n);
+		m_impl->DrawPage(dc, pageDrawRect, (int) n);
 }
 
 wxCoord wxPDFViewThumbnailListBox::OnMeasureItem(size_t WXUNUSED(n)) const

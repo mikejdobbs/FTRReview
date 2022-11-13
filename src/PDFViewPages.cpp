@@ -304,7 +304,7 @@ void wxPDFViewPagesClient::SetVisiblePages(int firstPage, int lastPage)
 	if (firstPage < 0)
 		firstPage = 0;
 	if (lastPage >= (int) m_pPages->size())
-		lastPage = m_pPages->size() - 1;
+		lastPage = (int) m_pPages->size() - 1;
 
 	m_firstVisiblePage = firstPage;
 	m_lastVisiblePage = lastPage;

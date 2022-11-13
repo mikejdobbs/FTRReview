@@ -162,13 +162,13 @@ int Form_Browse(IPDF_JSPLATFORM* pThis,
 		if (dlg.ShowModal() == wxID_OK)
 		{
 			g_formSelectedFilePath = dlg.GetPath();
-			return g_formSelectedFilePath.length();
+			return (int) g_formSelectedFilePath.length();
 		}
 	}
 	else if (filePath != NULL)
 	{
 		memcpy(filePath, g_formSelectedFilePath.utf8_str(), g_formSelectedFilePath.length());
-		return g_formSelectedFilePath.length();
+		return (int) g_formSelectedFilePath.length();
 	}
 
 	return 0;
@@ -983,7 +983,7 @@ long wxPDFViewImpl::Find(const wxString& text, int flags)
 
 	// Wrap find index
 	if (m_currentFindIndex < 0)
-		m_currentFindIndex = m_findResults.size() - 1;
+		m_currentFindIndex = (int) m_findResults.size() - 1;
 	else if (m_currentFindIndex >= (int) m_findResults.size())
 		m_currentFindIndex = 0;
 
@@ -1343,7 +1343,7 @@ bool wxPDFViewImpl::EvaluateLinkTargetPageAtClientPos(const wxPoint& clientPos, 
 								break;
 							case PDFACTION_URI:
 								{
-									int uriSize = FPDFAction_GetURIPath(m_pdfDoc, action, NULL, 0);
+									int uriSize = (int) FPDFAction_GetURIPath(m_pdfDoc, action, NULL, 0);
 									char* uriBuf = new char[uriSize];
 									FPDFAction_GetURIPath(m_pdfDoc, action, uriBuf, uriSize);
 									wxString uriString(uriBuf, uriSize - 1);
