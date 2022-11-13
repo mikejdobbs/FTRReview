@@ -1,6 +1,7 @@
 #ifndef _SIMPLE_H_
 #define _SIMPLE_H_
 
+#include <wx/wx.h>
 #include <wx/app.h>
 #include <wx/frame.h>
 
@@ -13,9 +14,18 @@ public:
 
 class FTRReviewFrame : public wxFrame
 {
-public:
-	FTRReviewFrame();
-	void OnButton(wxCommandEvent &evt);
+    public:
+        FTRReviewFrame();
+        void OnButton(wxCommandEvent &evt);
+
+    private:
+        wxMenuBar *menubar;
+        wxMenu *menuFileBar;
+    
+        void onAbout(wxCommandEvent& WXUNUSED(event));
+        void onQuit(wxCommandEvent& WXUNUSED(event));
+
+
 };
 
 wxIMPLEMENT_APP(FTRReviewApp);

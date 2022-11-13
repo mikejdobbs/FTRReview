@@ -32,6 +32,19 @@ FTRReviewFrame::FTRReviewFrame() : wxFrame(NULL, wxID_ANY, "FTRReview")
 
 	this->SetSizer(topsizer);
 	this->Bind(wxEVT_COMMAND_BUTTON_CLICKED, &FTRReviewFrame::OnButton, this);
+    
+    //menu
+    menubar = new wxMenuBar;
+    menuFileBar  = new wxMenu;
+    
+    menuFileBar->Append(wxID_ABOUT, wxT("&About"));
+    menuFileBar->Append(wxID_EXIT, wxT("Q&uit"));
+    
+    menubar->Append(menuFileBar, wxT("&File"));
+    SetMenuBar(menubar);
+    
+    Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(FTRReviewFrame::onQuit));
+    Connect(wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(FTRReviewFrame::onAbout));
 }
 
 void FTRReviewFrame::OnButton(wxCommandEvent &evt)
@@ -45,3 +58,18 @@ void FTRReviewFrame::OnButton(wxCommandEvent &evt)
 			frame->Show();
 	}
 }
+
+
+
+
+void FTRReviewFrame::onAbout(wxCommandEvent& WXUNUSED(event)) {
+    wxMessageDialog *dial = new wxMessageDialog(NULL,
+       wxT("Final Technical Report Review\n\n Michael Dobbs\nIntellectual Propertly Law(IPL)\nU.S. Department of Energy\nMike.Dobbs@science.doe.gov"), wxT("About"), wxOK | wxICON_INFORMATION);
+    dial->ShowModal();
+}
+
+void FTRReviewFrame::onQuit(wxCommandEvent& WXUNUSED(event)) {
+    Close();
+    
+}
+

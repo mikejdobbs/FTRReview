@@ -286,6 +286,20 @@ void wxPDFViewDocumentFrame::OnPDFDocumentReady(wxCommandEvent& event)
 {
 	wxConfigBase* cfg = wxConfig::Get();
 	wxConfigPathChanger pathChanger(cfg, GetName() + "/");
+    
+    //menu
+    menubar = new wxMenuBar;
+    menuFileBar  = new wxMenu;
+    
+    menuFileBar->Append(wxID_ABOUT, wxT("&About"));
+    menuFileBar->Append(wxID_EXIT, wxT("Q&uit"));
+
+    menubar->Append(menuFileBar, wxT("&File"));
+    SetMenuBar(menubar);
+    
+    Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(wxPDFViewDocumentFrame::onQuit));
+    Connect(wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(wxPDFViewDocumentFrame::onAbout));
+
 	
 	m_toolBar->EnableTool(ID_ZOOM_OUT, true);
 	m_toolBar->EnableTool(ID_ZOOM_IN, true);
@@ -583,3 +597,15 @@ void wxPDFViewDocumentFrame::SaveZoomConfig()
 	wxConfigPathChanger pathChanger(cfg, GetName() + "/");
 	cfg->Write("ZoomType", (int) m_pdfView->GetZoomType());
 }
+
+void wxPDFViewDocumentFrame::onAbout(wxCommandEvent& WXUNUSED(event)) {
+    wxMessageDialog *dial = new wxMessageDialog(NULL,
+       wxT("Final Technical Report Review\n\n Michael Dobbs\nIntellectual Propertly Law(IPL)\nU.S. Department of Energy\nMike.Dobbs@science.doe.gov"), wxT("About"), wxOK | wxICON_INFORMATION);
+    dial->ShowModal();
+}
+
+void wxPDFViewDocumentFrame::onQuit(wxCommandEvent& WXUNUSED(event)) {
+    Close();
+    
+}
+

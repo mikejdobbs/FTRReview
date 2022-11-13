@@ -64,6 +64,9 @@ public:
 	bool LoadFile(const wxString& fileName);
 
 	wxPDFView* GetPDFView() { return m_pdfView; };
+    
+    void onAbout(wxCommandEvent& WXUNUSED(event));
+    void onQuit(wxCommandEvent& WXUNUSED(event));
 
 protected:
 	enum
@@ -97,6 +100,9 @@ protected:
 	wxStaticText* m_pageCountTxtCtrl;
 	wxComboBox* m_zoomComboBox;
 	wxString m_fileName;
+    
+    wxMenuBar *menubar;
+    wxMenu *menuFileBar;
 
 	/**
 	   Override this method to customize the printDialogData used when the print button is pressed
@@ -113,7 +119,7 @@ protected:
 	void UpdateActivity(const wxString& description);
 	
 	void EndActivity();
-	
+    
 private:
 	wxString m_searchText;
 	wxPDFViewActivityPanel* m_activityPanel;
