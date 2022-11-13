@@ -1679,7 +1679,12 @@ void wxPDFViewImpl::ReleaseSDK()
 // Compares two ReviewResult;  used for sorting
 bool compareReviewResult(ReviewResult i1, ReviewResult i2)
 {
-    return (i1.page < i2.page); //TODO: Also sort on the locatio of text on page order
+    if (i1.page == i2.page) {
+        return (i1.match->GetCharIndex() < i2.match->GetCharIndex());
+    }
+    else {
+        return (i1.page < i2.page);
+    }
 }
 
 //Looks for reviews

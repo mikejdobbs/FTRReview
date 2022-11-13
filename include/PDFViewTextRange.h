@@ -26,7 +26,6 @@ public:
 	void SetCharCount(int count) { m_charCount = count; }
 
 	wxVector<wxRect> GetScreenRects(const wxRect& pageRect);
-    // bool hasPage() {return m_page != nullptr;}; //TODO: REmove
 
 private:
 	wxPDFViewPage* m_page;
