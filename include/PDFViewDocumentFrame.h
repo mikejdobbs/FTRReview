@@ -65,7 +65,6 @@ public:
 
 	wxPDFView* GetPDFView() { return m_pdfView; };
     
-    void onAbout(wxCommandEvent& WXUNUSED(event));
     void onQuit(wxCommandEvent& WXUNUSED(event));
 
 protected:

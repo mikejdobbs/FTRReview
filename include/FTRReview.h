@@ -5,6 +5,7 @@
 #include <wx/app.h>
 #include <wx/frame.h>
 
+const wxString version = "Alpha (2022-11-13)";
 
 class FTRReviewApp : public wxApp
 {

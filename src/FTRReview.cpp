@@ -64,7 +64,7 @@ void FTRReviewFrame::OnButton(wxCommandEvent &evt)
 
 void FTRReviewFrame::onAbout(wxCommandEvent& WXUNUSED(event)) {
     wxMessageDialog *dial = new wxMessageDialog(NULL,
-       wxT("Final Technical Report Review\n\n Michael Dobbs\nIntellectual Propertly Law(IPL)\nU.S. Department of Energy\nMike.Dobbs@science.doe.gov"), wxT("About"), wxOK | wxICON_INFORMATION);
+       "Final Technical Report Review\n\n Michael Dobbs\nIntellectual Propertly Law(IPL)\nU.S. Department of Energy\nMike.Dobbs@science.doe.gov\n\n" + version, wxT("About"), wxOK | wxICON_INFORMATION);
     dial->ShowModal();
 }
 
