@@ -10,13 +10,17 @@
 #include "PDFViewImpl.h"
 #include "PDFReviewSearcher.h"
 #include "PDFViewPages.h"
+#include <wx/listimpl.cpp>
+
+WX_DEFINE_LIST(wxPDFViewTextRangeList);
+
 
 wxString Review::GetReviewTextResult() {
     //add page numbers
     wxString pages;
     for(auto reviewSearch : reviewSearches) {
         for(auto match : reviewSearch.matches) {
-            pages << (match.GetPage()->GetIndex() + 1)  << ",";
+            pages << (match->GetPage()->GetIndex() + 1)  << ",";
         }
     }
     //page.replace
@@ -24,11 +28,27 @@ wxString Review::GetReviewTextResult() {
     return errorText; 
 }
 
+void Review::ignoreMatch(wxPDFViewTextRange *match){
+    for (auto &reviewSearch : reviewSearches) {
+        if (reviewSearch.matches.DeleteObject(match)) {
+            reviewSearch.excludedMatches.push_back(match);
+        }
+    }
+}
+void Review::restoreMatch(wxPDFViewTextRange *match) {
+    for (auto &reviewSearch : reviewSearches) {
+        if (reviewSearch.excludedMatches.DeleteObject(match)) {
+            reviewSearch.matches.push_back(match);
+        } //end if
+    } //end for
+}
+
+
 wxString Review::GetPagesForReviewSearch(const ReviewSearch &reviewSearch) {
     wxString response;
     int lastPageIndex = 0;
     for (auto match: reviewSearch.matches ) {
-        int pageIndex = match.GetPage()->GetIndex() + 1;
+        int pageIndex = match->GetPage()->GetIndex() + 1;
         
         //skip pages that have already been listed
         if (lastPageIndex == pageIndex) {

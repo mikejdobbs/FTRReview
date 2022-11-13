@@ -20,6 +20,7 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     AppendTextColumn( "Issue" );
     
     Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PDFViewReviewCtrl::OnSelectionChanged, this);
+    Bind(wxEVT_DATAVIEW_ITEM_VALUE_CHANGED, &PDFViewReviewCtrl::OnValueChanged, this);
     Bind(wxEVT_SIZE, &PDFViewReviewCtrl::OnSize, this);
 
 }
@@ -62,6 +63,25 @@ void PDFViewReviewCtrl::OnSelectionChanged(wxDataViewEvent& event)
     event.Skip();
 }
 
+void PDFViewReviewCtrl::OnValueChanged(wxDataViewEvent& event) {
+    const wxDataViewItem &item = event.GetItem();
+    wxPDFViewTextRange *match = (wxPDFViewTextRange *) GetItemData(item);
+    const int rowID = ItemToRow(item);
+    bool toggled = GetToggleValue(rowID, 0);
+    
+    //send match to review.ignore or restore depending on check
+    if (toggled)
+        m_pdfView->GetImpl()->restoreMatch(match);
+    else
+        m_pdfView->GetImpl()->ignoreMatch(match);
+    
+    //copy new text
+    textOutputCTRL->ChangeValue(GetReviewTextResult());
+    wxLogDebug(GetReviewTextResult());
+    event.Skip();
+}
+
+
 void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
 {
     return;
@@ -92,22 +112,20 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
         
             wxString pageNumber;
             pageNumber << result->page;
-
         
             wxVector<wxVariant> data;
             data.push_back( wxVariant(true) );
             data.push_back( wxVariant(pageNumber) );
             data.push_back( wxVariant(result->description) );
-            AppendItem( data );
+            AppendItem( data, (wxUIntPtr) result->match );
         
-        m_pdfView->GetImpl()->SetSelection(result->match);
+            m_pdfView->GetImpl()->SetSelection(*result->match);
 
     } //end search for review
 
     //populate widnow
-    textOutputCTRL->Clear();
-    textOutputCTRL->WriteText(GetReviewTextResult());
-    
+    textOutputCTRL->ChangeValue(GetReviewTextResult());
+
     event.Skip();
 }
 

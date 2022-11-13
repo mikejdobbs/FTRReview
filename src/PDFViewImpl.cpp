@@ -1666,9 +1666,9 @@ long wxPDFViewImpl::ReviewPDF() {
         for(auto reviewSearch : review->reviewSearches) {
             for(auto match : reviewSearch.matches) {
                 ReviewResult result(
-                                    match.GetPage()->GetIndex() + 1, //add one here so it is 1-indexed instead of 0-indexed
+                                    match->GetPage()->GetIndex() + 1, //add one here so it is 1-indexed instead of 0-indexed
                                     reviewSearch.description,
-                                    *review.get(),
+                                    review.get(),
                                     match);
                 results.push_back(result);
             } //end search for review
@@ -1714,7 +1714,7 @@ long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Revi
     while (FPDFText_FindNext(find))
     {
         //add all matches to the review.matchs vector
-        const wxPDFViewTextRange result(&page,FPDFText_GetSchResultIndex(find),FPDFText_GetSchCount(find));
+        wxPDFViewTextRange *result = new wxPDFViewTextRange(&page,FPDFText_GetSchResultIndex(find),FPDFText_GetSchCount(find)); //TODO Check for memory leak
         reviewSearch.matches.push_back(result);
         ++resultCount;
     }
@@ -1725,4 +1725,14 @@ long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Revi
     
 }
 
+void wxPDFViewImpl::ignoreMatch(wxPDFViewTextRange *match){
+    for (auto review : reviews) {
+        review->ignoreMatch(match);
+    }
+}
 
+void wxPDFViewImpl::restoreMatch(wxPDFViewTextRange *match) {
+    for (auto review : reviews) {
+        review->restoreMatch(match);
+    }
+}
