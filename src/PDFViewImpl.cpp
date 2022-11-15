@@ -628,7 +628,7 @@ void wxPDFViewImpl::OnPaint(wxPaintEvent& WXUNUSED(event))
 	}
 
 	// Draw text find selections
-	gc->SetBrush(wxColor(0, 0, 200, 50));
+	gc->SetBrush(wxColor(0, 0, 255, 100));
 	gc->SetPen(*wxTRANSPARENT_PEN);
 
 	for (auto it = m_selection.begin(); it != m_selection.end(); ++it)
