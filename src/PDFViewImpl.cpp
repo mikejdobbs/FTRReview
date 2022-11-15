@@ -1755,7 +1755,7 @@ long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Revi
     FPDF_SCHHANDLE find = FPDFText_FindStart(
      pageText,
 #ifdef __WXMSW__
-        reinterpret_cast<FPDF_WIDESTRING>(review.searchString.wc_str(conv)),
+        reinterpret_cast<FPDF_WIDESTRING>(reviewSearch.searchString.wc_str(conv)),
 #else
      reinterpret_cast<FPDF_WIDESTRING>((const char*)reviewSearch.searchString.mb_str(conv)),
 #endif

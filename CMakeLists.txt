@@ -46,7 +46,7 @@ set(SOURCES
 	src/PDFViewTextRange.cpp
 	src/PDFViewThumbnailListBox.cpp
 	src/PDFViewThumbnailListBoxImpl.cpp
-    src/PDFViewReviewSearcher.cpp
+    	src/PDFReviewSearcher.cpp
 
 	include/FTRReview.h
 	include/PDFView.h
@@ -63,11 +63,15 @@ set(SOURCES
 	include/PDFViewPrintout.h
 	include/PDFViewTextRange.h
 	include/PDFViewThumbnailListBoxImpl.h
-    include/PDFViewReviewSearcher.h
+    	include/PDFReviewSearcher.h
 )
 
 #target
+if(WIN32)
+add_executable(FTRReview  WIN32 ${SOURCES})
+elseif(APPLE)
 add_executable(FTRReview ${SOURCES})
+endif()
 
 target_link_libraries(FTRReview ${wxWidgets_LIBRARIES})
 target_link_libraries(FTRReview pdfium)
