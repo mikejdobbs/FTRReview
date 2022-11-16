@@ -15,9 +15,10 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     
     m_pdfView = NULL;
     
-    AppendToggleColumn( "Toggle", wxDATAVIEW_CELL_ACTIVATABLE,50,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
-    AppendTextColumn( "Page", wxDATAVIEW_CELL_ACTIVATABLE,25,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
-    AppendTextColumn( "Issue" );
+    wxDataViewColumn* toggle = AppendToggleColumn( "Toggle", wxDATAVIEW_CELL_ACTIVATABLE, wxCOL_WIDTH_AUTOSIZE,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
+    toggle->SetWidth(50);
+    AppendTextColumn( "Page", wxDATAVIEW_CELL_ACTIVATABLE, wxCOL_WIDTH_AUTOSIZE,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
+    AppendTextColumn( "Issue", wxDATAVIEW_CELL_ACTIVATABLE, wxCOL_WIDTH_AUTOSIZE, wxALIGN_LEFT, wxDATAVIEW_COL_RESIZABLE);
     
     Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PDFViewReviewCtrl::OnSelectionChanged, this);
     Bind(wxEVT_DATAVIEW_ITEM_VALUE_CHANGED, &PDFViewReviewCtrl::OnValueChanged, this);
@@ -137,7 +138,9 @@ void PDFViewReviewCtrl::OnSize(wxSizeEvent& event)
     if ( GetColumnCount() )
     {
         wxSize size = GetClientSize();
-        GetColumn(0)->SetWidth(size.x);
+        GetColumn(0)->SetWidth(25);
+        GetColumn(1)->SetWidth(50);
+        GetColumn(2)->SetWidth(size.x - 75);
     }
 #endif
     event.Skip();
