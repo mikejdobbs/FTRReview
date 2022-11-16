@@ -17,7 +17,7 @@ endif()
 
 
 #WXwidgets
-
+set(wxWidgets_ROOT_DIR c:/wxWidgets)
 find_package(wxWidgets REQUIRED COMPONENTS net core adv base)
 include(${wxWidgets_USE_FILE})
 

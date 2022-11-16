@@ -51,7 +51,7 @@ void wxPDFViewThumbnailListBoxImpl::DrawPage(wxDC& dc, const wxRect& rect, int p
 	wxPDFViewPage& page = (*m_pPages)[pageIndex];
 	wxRect pageRect(m_pdfView->GetImpl()->GetPageSize(pageIndex));
 	pageDrawRect.width = pageDrawRect.height / ((double) pageRect.height / pageRect.width);
-	page.DrawThumbnail(this, dc, pageDrawRect.CenterIn(rect), m_pdfView->GetImpl()->GetOrientation());
+	page.DrawThumbnail(this, dc, pageDrawRect.CenterIn(rect), m_pdfView->GetImpl()->GetOrientation()); //TODO:RESTORE
 }
 
 void wxPDFViewThumbnailListBoxImpl::HandleScrollWindow(int WXUNUSED(dx), int WXUNUSED(dy))

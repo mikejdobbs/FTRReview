@@ -1704,8 +1704,7 @@ long wxPDFViewImpl::ReviewPDF() {
     for (int pageIndex = 0;pageIndex != GetPageCount(); ++pageIndex) {
         const wxString pageWxString = m_pages[pageIndex].GetwxString();
         const FPDF_TEXTPAGE pageText = m_pages[pageIndex].GetTextPage();
-        
-        wxLogDebug(pageWxString);
+       
         for (auto review: reviews) {
             review->PreReviewPage(pageWxString);
             ReviewPage(m_pages[pageIndex], pageText, review.get());

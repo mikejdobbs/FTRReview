@@ -15,14 +15,14 @@ bool PDFViewReviewCtrl::Create(wxWindow *parent, wxWindowID id) {
     
     m_pdfView = NULL;
     
-    AppendToggleColumn( "Toggle", wxDATAVIEW_CELL_ACTIVATABLE,10,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
+    AppendToggleColumn( "Toggle", wxDATAVIEW_CELL_ACTIVATABLE,50,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
     AppendTextColumn( "Page", wxDATAVIEW_CELL_ACTIVATABLE,25,  wxALIGN_LEFT,wxDATAVIEW_COL_RESIZABLE );
     AppendTextColumn( "Issue" );
     
     Bind(wxEVT_DATAVIEW_SELECTION_CHANGED, &PDFViewReviewCtrl::OnSelectionChanged, this);
     Bind(wxEVT_DATAVIEW_ITEM_VALUE_CHANGED, &PDFViewReviewCtrl::OnValueChanged, this);
     Bind(wxEVT_SIZE, &PDFViewReviewCtrl::OnSize, this);
-
+    return true;
 }
 
 

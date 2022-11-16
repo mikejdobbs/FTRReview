@@ -6,6 +6,7 @@
 //
 
 #include <wx/regex.h>
+#include <wx/textfile.h>
 
 #include "PDFViewImpl.h"
 #include "PDFReviewSearcher.h"
@@ -108,7 +109,7 @@ wxString ReviewForInventionPatent::GetReviewTextResult() {
     
     for (auto &reviewSearch : reviewSearches) {
         if (!reviewSearch.matches.empty()) {
-            response << "Please confirm all subject inventions have been reported to DOE via iEdison as the use of " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  " indicate a potential subject invention.\n";
+            response << "Please confirm all subject inventions have been reported to DOE via iEdison as the use of " << "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch) << " indicate a potential subject invention." << wxTextFile::GetEOL();
         }
         
     }
@@ -142,7 +143,7 @@ wxString ReviewForProtectiveMarkings::GetReviewTextResult() {
     
     for (auto &reviewSearch : reviewSearches) {
         if (!reviewSearch.matches.empty()) {
-            response << "Please remove the unauthorized use of " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  ".\n";
+            response << "Please remove the unauthorized use of " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  << wxTextFile::GetEOL();
         }
         
     }
@@ -161,7 +162,7 @@ wxString ReviewForCopyright::GetReviewTextResult() {
     
     for (auto &reviewSearch : reviewSearches) {
         if (!reviewSearch.matches.empty()) {
-            response << "Please remove " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  " or add the following Acknowledgement of the Government license.\n";
+            response << "Please remove " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  " or add the following Acknowledgement of the Government license." << wxTextFile::GetEOL();
             response << "Acknowledgement of Government Support and Government License\nThis work was generated with financial support from the U.S. Government through Contract/Award No. __________________, and as such the U.S. Government retains a paid-up, nonexclusive, irrevocable, world-wide license to reproduce, prepare derivative works, distribute copies to the public, and display publicly, by or on behalf of the Government, this work in whole or in part, or otherwise use the work for Federal purposes.";
         } //end if match
     }//end for
