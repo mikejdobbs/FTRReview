@@ -43,6 +43,17 @@ FTRReviewFrame::FTRReviewFrame() : wxFrame(NULL, wxID_ANY, "FTRReview")
     menubar->Append(menuFileBar, wxT("&File"));
     SetMenuBar(menubar);
     
+    wxString strFile("Drop files here!"), strText("Drop text on me");
+
+    wxListBox *m_ctrlFile  = new wxListBox(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, 1, &strFile,
+                                    wxLB_HSCROLL | wxLB_ALWAYS_SB );
+    
+    topsizer->Add(m_ctrlFile, 1, wxEXPAND);
+
+    
+    m_ctrlFile->DragAcceptFiles(true);
+    m_ctrlFile->SetDropTarget(new DnDFile());
+    
     Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(FTRReviewFrame::onQuit));
     Connect(wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(FTRReviewFrame::onAbout));
 }
@@ -73,3 +84,18 @@ void FTRReviewFrame::onQuit(wxCommandEvent& WXUNUSED(event)) {
     
 }
 
+bool DnDFile::OnDropFiles(wxCoord, wxCoord, const wxArrayString& filenames)
+{
+    size_t nFiles = filenames.GetCount();
+    wxString str;
+    str.Printf( "%d files dropped", (int)nFiles);
+
+    for (auto filename: filenames) {
+        wxPDFViewDocumentFrame* frame = new wxPDFViewDocumentFrame(m_pOwner);
+        if (frame->LoadFile(filename))
+            frame->Show();
+    }
+    
+
+    return true;
+}

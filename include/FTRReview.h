@@ -1,9 +1,15 @@
 #ifndef _SIMPLE_H_
 #define _SIMPLE_H_
 
+#include "wx/wxprec.h"
+
+#ifndef WX_PRECOMP
 #include <wx/wx.h>
+#endif
+
 #include <wx/app.h>
 #include <wx/frame.h>
+#include "wx/dnd.h"
 
 const wxString version = "Alpha (2022-11-13)";
 
@@ -11,6 +17,18 @@ class FTRReviewApp : public wxApp
 {
 public:
 	virtual bool OnInit();
+};
+
+class DnDFile : public wxFileDropTarget
+{
+public:
+    DnDFile(wxFrame *pOwner = nullptr) { m_pOwner = pOwner; }
+
+    virtual bool OnDropFiles(wxCoord x, wxCoord y,
+                             const wxArrayString& filenames) override;
+
+private:
+    wxFrame *m_pOwner;
 };
 
 class FTRReviewFrame : public wxFrame
