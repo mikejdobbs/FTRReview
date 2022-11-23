@@ -1255,6 +1255,18 @@ void wxPDFViewImpl::CloseDocument()
 	m_mostVisiblePage = -1;
 
 	ClearBitmapCache();
+    
+    //clear reviews
+    for (auto review: reviews) {
+        wxDELETE(review);
+    }
+    reviews.clear();
+    
+    for (auto result: results) {
+        wxDELETE(result);
+    }
+    results.clear();
+
 }
 
 void wxPDFViewImpl::HandleScrollWindow(int WXUNUSED(dx), int WXUNUSED(dy))

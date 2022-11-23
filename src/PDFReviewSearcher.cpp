@@ -18,11 +18,11 @@ WX_DEFINE_LIST(wxPDFViewTextRangeList);
 
 ReviewSearch::~ReviewSearch() {
     for (auto match: matches) {
-        delete match; //TODO: FIX -causes crash
+        wxDELETE(match);
     }
 
     for (auto match: excludedMatches) {
-        delete match;
+        wxDELETE(match);  
     }
 
 }

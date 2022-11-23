@@ -45,6 +45,11 @@ class Review {
 
         void ignoreMatch(wxPDFViewTextRange *match);
         void restoreMatch(wxPDFViewTextRange *match);
+        ~Review() {
+            for (auto reviewSearch : reviewSearches) {
+                wxDELETE(reviewSearch);
+            };
+        }
 };
 
 

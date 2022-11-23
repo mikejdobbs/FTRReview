@@ -90,7 +90,6 @@ void PDFViewReviewCtrl::OnValueChanged(wxDataViewEvent& event) {
 
 void PDFViewReviewCtrl::OnPDFDocumentClosed(wxCommandEvent& event)
 {
-    return;
     event.Skip();
 }
 

@@ -53,7 +53,7 @@ bool wxPDFView::Create(wxWindow *parent,
 	bool res = wxScrolledCanvas::Create(parent, winid, pos, size, style | wxFULL_REPAINT_ON_RESIZE | wxWANTS_CHARS, name);
 	if (res)
 	{
-		m_impl = new wxPDFViewImpl(this);
+        m_impl = new wxPDFViewImpl(this);
 
 		SetBackgroundStyle(wxBG_STYLE_PAINT);
 		SetBackgroundColour(wxColour(86, 86, 86));
