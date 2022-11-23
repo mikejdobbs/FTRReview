@@ -5,6 +5,7 @@
 #include <wx/button.h>
 #include <wx/sizer.h>
 #include <wx/filedlg.h>
+#include <wx/aboutdlg.h>
 
 #include "FTRReview.h"
 
@@ -74,9 +75,19 @@ void FTRReviewFrame::OnButton(wxCommandEvent &evt)
 
 
 void FTRReviewFrame::onAbout(wxCommandEvent& WXUNUSED(event)) {
-    wxMessageDialog *dial = new wxMessageDialog(NULL,
-       "Final Technical Report Review\n\n Michael Dobbs\nIntellectual Propertly Law(IPL)\nU.S. Department of Energy\nMike.Dobbs@science.doe.gov\n\n" + version, wxT("About"), wxOK | wxICON_INFORMATION);
-    dial->ShowModal();
+//    wxMessageDialog *dial = new wxMessageDialog(NULL,
+//       "Final Technical Report Review\n\n Michael Dobbs\nIntellectual Propertly Law(IPL)\nU.S. Department of Energy\nMike.Dobbs@science.doe.gov\n\n" + version, wxT("About"), wxOK | wxICON_INFORMATION);
+//    dial->ShowModal();
+    
+    wxAboutDialogInfo aboutInfo;
+       aboutInfo.SetName("FTRReview");
+       aboutInfo.SetVersion(MY_APP_VERSION_STRING);
+       aboutInfo.SetDescription("Final Technical Report Review\n\nSpecial Thanks to Glen Drysdale, Tim Harney, Tim Harney, Paula Leon, and Cindy Ridge\n\nLicense:www.wxwidgets.org/about/licence/");
+       aboutInfo.SetCopyright("(C) 2022");
+       //aboutInfo.SetWebSite("http://myapp.org");
+       aboutInfo.AddDeveloper("Michael J. Dobbs");
+    
+       wxAboutBox(aboutInfo);
 }
 
 void FTRReviewFrame::onQuit(wxCommandEvent& WXUNUSED(event)) {
