@@ -111,9 +111,9 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
     m_pdfView->GetImpl()->clearSelections();
     
     
-
-    std::vector<ReviewResult> results = m_pdfView->GetReviewResultSortedByPage();
-    for (std::vector<ReviewResult>::iterator result = results.begin(); result != results.end(); ++result) {
+    //show results (actual review is done a few lines up)
+    std::vector<ReviewResult *> *results = m_pdfView->GetReviewResultSortedByPage();
+    for (auto result: *results){
             wxString pageNumber;
             pageNumber << result->page;
         
@@ -123,7 +123,7 @@ void PDFViewReviewCtrl::OnPDFDocumentReady(wxCommandEvent& event)
             data.push_back( wxVariant(result->description) );
             AppendItem( data, (wxUIntPtr) result->match );
 
-        m_pdfView->GetImpl()->SetReviewSelection(*result->match);
+        m_pdfView->GetImpl()->SetReviewSelection(result->match);
     } //end search for review
 
     //populate widnow

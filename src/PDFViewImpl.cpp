@@ -654,16 +654,16 @@ void wxPDFViewImpl::OnPaint(wxPaintEvent& WXUNUSED(event))
     gc->SetBrush(wxColor(255, 255, 0, 75));
     gc->SetPen(*wxTRANSPARENT_PEN);
 
-    for (auto it = reviewSelections.begin(); it != reviewSelections.end(); ++it)
+    for (auto selection: reviewSelections)
     {
-        int pageIndex = it->GetPage()->GetIndex();
+        int pageIndex = selection->GetPage()->GetIndex();
         if (IsPageVisible(pageIndex))
         {
             wxRect pageRect = m_pageRects[pageIndex];
             if (pageRect.Intersects(rectUpdate))
             {
                 // Screen rects are relative to the page
-                wxVector<wxRect> screenRects = it->GetScreenRects(m_pageRects[pageIndex]);
+                wxVector<wxRect> screenRects = selection->GetScreenRects(m_pageRects[pageIndex]);
                 for (auto sr = screenRects.begin(); sr != screenRects.end(); ++sr)
                 {
                     sr->Offset(m_pageRects[pageIndex].GetPosition());
@@ -1677,15 +1677,16 @@ void wxPDFViewImpl::ReleaseSDK()
 
 
 // Compares two ReviewResult;  used for sorting
-bool compareReviewResult(ReviewResult i1, ReviewResult i2)
+bool compareReviewResult(ReviewResult *i1, ReviewResult *i2)
 {
-    if (i1.page == i2.page) {
-        return (i1.match->GetCharIndex() < i2.match->GetCharIndex());
+    if (i1->page == i2->page) {
+        return (i1->match->GetCharIndex() < i2->match->GetCharIndex());
     }
     else {
-        return (i1.page < i2.page);
+        return (i1->page < i2->page);
     }
 }
+
 
 //Looks for reviews
 long wxPDFViewImpl::ReviewPDF() {
@@ -1696,9 +1697,9 @@ long wxPDFViewImpl::ReviewPDF() {
     //Add test reviews
     reviews.clear();
     
-    reviews.push_back(wxSharedPtr<Review> (new ReviewForInventionPatent()));
-    reviews.push_back(wxSharedPtr<Review> (new ReviewForCopyright()));
-    reviews.push_back(wxSharedPtr<Review> (new ReviewForProtectiveMarkings()));
+    reviews.push_back(new ReviewForInventionPatent());
+    reviews.push_back(new ReviewForCopyright());
+    reviews.push_back(new ReviewForProtectiveMarkings());
 
     //for each page
     for (int pageIndex = 0;pageIndex != GetPageCount(); ++pageIndex) {
@@ -1707,7 +1708,7 @@ long wxPDFViewImpl::ReviewPDF() {
        
         for (auto review: reviews) {
             review->PreReviewPage(pageWxString);
-            ReviewPage(m_pages[pageIndex], pageText, review.get());
+            ReviewPage(m_pages[pageIndex], pageText, review);
         } //end search for review
 
     } //end review of each page
@@ -1715,12 +1716,12 @@ long wxPDFViewImpl::ReviewPDF() {
     //now populate results used for display
     results.clear();
     for (auto review : reviews)  {
-        for(auto reviewSearch : review->reviewSearches) {
-            for(auto match : reviewSearch.matches) {
-                ReviewResult result(
+        for(ReviewSearch *reviewSearch : review->reviewSearches) {
+            for(wxPDFViewTextRange *match : reviewSearch->matches) {
+                ReviewResult *result = new ReviewResult(
                                     match->GetPage()->GetIndex() + 1, //add one here so it is 1-indexed instead of 0-indexed
-                                    reviewSearch.description,
-                                    review.get(),
+                                    reviewSearch->description,
+                                    review,
                                     match);
                 results.push_back(result);
             } //end search for review
@@ -1736,13 +1737,13 @@ long wxPDFViewImpl::ReviewPDF() {
 
 void wxPDFViewImpl::ReviewPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Review *review) {
     
-    for(auto &reviewSearch : review->reviewSearches) {
+    for(ReviewSearch * reviewSearch : review->reviewSearches) {
         SearchPage(page, pageText,reviewSearch);
     }
     
 }
 
-long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch &reviewSearch) {
+long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch *reviewSearch) {
     
     bool firstSearch = false;
     int characterToStartSearchingFrom = 0;
@@ -1756,7 +1757,7 @@ long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Revi
 #ifdef __WXMSW__
         reinterpret_cast<FPDF_WIDESTRING>(reviewSearch.searchString.wc_str(conv)),
 #else
-     reinterpret_cast<FPDF_WIDESTRING>((const char*)reviewSearch.searchString.mb_str(conv)),
+     reinterpret_cast<FPDF_WIDESTRING>((const char*)reviewSearch->searchString.mb_str(conv)),
 #endif
         flags, 0);
     
@@ -1765,8 +1766,8 @@ long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Revi
     while (FPDFText_FindNext(find))
     {
         //add all matches to the review.matchs vector
-        wxPDFViewTextRange *result = new wxPDFViewTextRange(&page,FPDFText_GetSchResultIndex(find),FPDFText_GetSchCount(find)); //TODO Check for memory leak
-        reviewSearch.matches.push_back(result);
+        wxPDFViewTextRange *result = new wxPDFViewTextRange(&page,FPDFText_GetSchResultIndex(find),FPDFText_GetSchCount(find));
+        reviewSearch->matches.push_back(result);
         ++resultCount;
     }
 

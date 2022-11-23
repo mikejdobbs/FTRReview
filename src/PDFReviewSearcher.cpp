@@ -16,11 +16,22 @@
 WX_DEFINE_LIST(wxPDFViewTextRangeList);
 
 
+ReviewSearch::~ReviewSearch() {
+    for (auto match: matches) {
+        delete match; //TODO: FIX -causes crash
+    }
+
+    for (auto match: excludedMatches) {
+        delete match;
+    }
+
+}
+
 wxString Review::GetReviewTextResult() {
     //add page numbers
     wxString pages;
     for(auto reviewSearch : reviewSearches) {
-        for(auto match : reviewSearch.matches) {
+        for(auto match : reviewSearch->matches) {
             pages << (match->GetPage()->GetIndex() + 1)  << ",";
         }
     }
@@ -31,24 +42,24 @@ wxString Review::GetReviewTextResult() {
 
 void Review::ignoreMatch(wxPDFViewTextRange *match){
     for (auto &reviewSearch : reviewSearches) {
-        if (reviewSearch.matches.DeleteObject(match)) {
-            reviewSearch.excludedMatches.push_back(match);
+        if (reviewSearch->matches.DeleteObject(match)) {
+            reviewSearch->excludedMatches.push_back(match);
         }
     }
 }
 void Review::restoreMatch(wxPDFViewTextRange *match) {
     for (auto &reviewSearch : reviewSearches) {
-        if (reviewSearch.excludedMatches.DeleteObject(match)) {
-            reviewSearch.matches.push_back(match);
+        if (reviewSearch->excludedMatches.DeleteObject(match)) {
+            reviewSearch->matches.push_back(match);
         } //end if
     } //end for
 }
 
 
-wxString Review::GetPagesForReviewSearch(const ReviewSearch &reviewSearch) {
+wxString Review::GetPagesForReviewSearch(ReviewSearch *reviewSearch) {
     wxString response;
     int lastPageIndex = 0;
-    for (auto match: reviewSearch.matches ) {
+    for (auto match: reviewSearch->matches ) {
         int pageIndex = match->GetPage()->GetIndex() + 1;
         
         //skip pages that have already been listed
@@ -67,9 +78,9 @@ wxString Review::GetPagesForReviewSearch(const ReviewSearch &reviewSearch) {
 }
 
 ReviewForInventionPatent::ReviewForInventionPatent() {
-    reviewSearches.push_back(ReviewSearch("invention",wxString("Possible Unreported Invention")));
-    reviewSearches.push_back(ReviewSearch("patent",wxString("Possible Unreported Patent")));
-    reviewSearches.push_back(ReviewSearch("USPTO",wxString("Possible Unreported Patent")));
+    reviewSearches.push_back(new ReviewSearch("invention",wxString("Possible Unreported Invention")));
+    reviewSearches.push_back(new ReviewSearch("patent",wxString("Possible Unreported Patent")));
+    reviewSearches.push_back(new ReviewSearch("USPTO",wxString("Possible Unreported Patent")));
 }
 
 //called before searching for matches
@@ -84,7 +95,7 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
             patentAppRE.GetMatch(&start, &len, 0);
             const wxString appNumberText = patentAppRE.GetMatch(processText,0);
             std::cout << "PatentApp: " << appNumberText;
-            reviewSearches.push_back(ReviewSearch(appNumberText,wxString("Possible Unreported Patent")));
+            reviewSearches.push_back(new ReviewSearch(appNumberText,wxString("Possible Unreported Patent")));
             processText = processText.Mid (start + len); //keep movingt to make sure we got all the text
     }
     
@@ -98,7 +109,7 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
             patentRE.GetMatch(&start, &len, 0);
             const wxString patentNumberText = patentRE.GetMatch(processText,0);
             std::cout << "Patent: " << patentNumberText;
-            reviewSearches.push_back(ReviewSearch(patentNumberText,wxString("Possible Unreported Patent")));
+            reviewSearches.push_back(new ReviewSearch(patentNumberText,wxString("Possible Unreported Patent")));
             processText = processText.Mid (start + len); //keep movingt to make sure we got all the text
     }
 }
@@ -108,8 +119,8 @@ wxString ReviewForInventionPatent::GetReviewTextResult() {
     wxString response;
     
     for (auto &reviewSearch : reviewSearches) {
-        if (!reviewSearch.matches.empty()) {
-            response << "Please confirm all subject inventions have been reported to DOE via iEdison as the use of " << "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch) << " indicate a potential subject invention." << wxTextFile::GetEOL();
+        if (!reviewSearch->matches.empty()) {
+            response << "Please confirm all subject inventions have been reported to DOE via iEdison as the use of " << "\"" << reviewSearch->searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch) << " indicate a potential subject invention." << wxTextFile::GetEOL();
         }
         
     }
@@ -120,15 +131,15 @@ wxString ReviewForInventionPatent::GetReviewTextResult() {
 //Protective Markings
 
 ReviewForProtectiveMarkings::ReviewForProtectiveMarkings() {
-    reviewSearches.push_back(ReviewSearch("proprietary",wxString("Proprietary")));
-    reviewSearches.push_back(ReviewSearch("export",wxString("Export Control")));
-    reviewSearches.push_back(ReviewSearch("limited rights",wxString("Limited Rights")));
-    reviewSearches.push_back(ReviewSearch("restricted rights",wxString("Restricted Rights")));
-    reviewSearches.push_back(ReviewSearch("classified",wxString("Classified")));
-    reviewSearches.push_back(ReviewSearch("secret",wxString("secret")));
-    reviewSearches.push_back(ReviewSearch("confidential",wxString("Confidential")));
-    reviewSearches.push_back(ReviewSearch("business sensitive",wxString("Business Sensitive")));
-    reviewSearches.push_back(ReviewSearch("trade secret",wxString("Trade Secret")));
+    reviewSearches.push_back(new ReviewSearch("proprietary",wxString("Proprietary")));
+    reviewSearches.push_back(new ReviewSearch("export",wxString("Export Control")));
+    reviewSearches.push_back(new ReviewSearch("limited rights",wxString("Limited Rights")));
+    reviewSearches.push_back(new ReviewSearch("restricted rights",wxString("Restricted Rights")));
+    reviewSearches.push_back(new ReviewSearch("classified",wxString("Classified")));
+    reviewSearches.push_back(new ReviewSearch("secret",wxString("secret")));
+    reviewSearches.push_back(new ReviewSearch("confidential",wxString("Confidential")));
+    reviewSearches.push_back(new ReviewSearch("business sensitive",wxString("Business Sensitive")));
+    reviewSearches.push_back(new ReviewSearch("trade secret",wxString("Trade Secret")));
 
 }
 
@@ -142,8 +153,8 @@ wxString ReviewForProtectiveMarkings::GetReviewTextResult() {
     wxString response;
     
     for (auto &reviewSearch : reviewSearches) {
-        if (!reviewSearch.matches.empty()) {
-            response << "Please remove the unauthorized use of " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  << wxTextFile::GetEOL();
+        if (!reviewSearch->matches.empty()) {
+            response << "Please remove the unauthorized use of " <<   "\"" << reviewSearch->searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  << wxTextFile::GetEOL();
         }
         
     }
@@ -153,16 +164,16 @@ wxString ReviewForProtectiveMarkings::GetReviewTextResult() {
 
 //reviewforCopyright
 ReviewForCopyright::ReviewForCopyright() {
-    reviewSearches.push_back(ReviewSearch("(c)",wxString("Copyright")));
-    reviewSearches.push_back(ReviewSearch("copyright",wxString("Copyright")));
+    reviewSearches.push_back(new ReviewSearch("(c)",wxString("Copyright")));
+    reviewSearches.push_back(new ReviewSearch("copyright",wxString("Copyright")));
 }
 
 wxString ReviewForCopyright::GetReviewTextResult() {
     wxString response;
     
     for (auto &reviewSearch : reviewSearches) {
-        if (!reviewSearch.matches.empty()) {
-            response << "Please remove " <<   "\"" << reviewSearch.searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  " or add the following Acknowledgement of the Government license." << wxTextFile::GetEOL();
+        if (!reviewSearch->matches.empty()) {
+            response << "Please remove " <<   "\"" << reviewSearch->searchString << "\"" << " on page(s) " << GetPagesForReviewSearch(reviewSearch)  <<  " or add the following Acknowledgement of the Government license." << wxTextFile::GetEOL();
             response << "Acknowledgement of Government Support and Government License\nThis work was generated with financial support from the U.S. Government through Contract/Award No. __________________, and as such the U.S. Government retains a paid-up, nonexclusive, irrevocable, world-wide license to reproduce, prepare derivative works, distribute copies to the public, and display publicly, by or on behalf of the Government, this work in whole or in part, or otherwise use the work for Federal purposes.";
         } //end if match
     }//end for

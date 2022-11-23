@@ -10,10 +10,11 @@
 
 #include <wx/wx.h>
 #include <wx/regex.h>
+#include <wx/listimpl.cpp>
 
 #include "PDFViewTextRange.h"
 
-WX_DECLARE_LIST(wxPDFViewTextRange, wxPDFViewTextRangeList);
+WX_DECLARE_LIST(wxPDFViewTextRange, wxPDFViewTextRangeList); //wxLIST stores pointers
 
 //used to hold search results
 class ReviewSearch {
@@ -22,6 +23,8 @@ class ReviewSearch {
         wxString description = wxString("Description"); //showed by gui for each match
         wxPDFViewTextRangeList matches;
         wxPDFViewTextRangeList excludedMatches; //holds matches which have been excluded
+    
+        ~ReviewSearch();//frees matches and excludedMatches
 
         ReviewSearch(wxString searchString,wxString description) : searchString(searchString),description(description) {}
 };
@@ -30,19 +33,18 @@ class ReviewSearch {
 class Review {
     public:
         int id = 0;
-        wxVector<ReviewSearch> reviewSearches;
+        wxVector<ReviewSearch *> reviewSearches;
         
         wxString description = wxString("Proprietary Data Marking");
         wxString errorText = wxString("Pages $(PAGES) include proprietary data markings, which are not acceptable under the terms of your agreement,");
     
         virtual wxString GetReviewTextResult(); //returns text for box
         virtual void PreReviewPage(wxString pageText) {wxLogError("Error, Undefined PreReviewPage");}
-        wxString GetPagesForReviewSearch(const ReviewSearch &reviewSearch);
+        wxString GetPagesForReviewSearch(ReviewSearch *reviewSearch);
+
 
         void ignoreMatch(wxPDFViewTextRange *match);
         void restoreMatch(wxPDFViewTextRange *match);
-
-
 };
 
 
@@ -82,8 +84,10 @@ class ReviewResult {
         Review *review;  //Used to report toggles back to DB
         wxPDFViewTextRange *match; //Used to add/subtract based on toggle
         ReviewResult (int page, wxString description, Review *review, wxPDFViewTextRange *match) : page(page),description(description),review(review),match(match) {};
+    
 };
 
 #endif /* PDFReviewSearcher_h */
+
 
 

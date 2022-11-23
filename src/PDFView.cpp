@@ -188,12 +188,12 @@ long wxPDFView::ReviewPDF()
         return wxNOT_FOUND;
 }
 
-wxVector<wxSharedPtr<Review>> *wxPDFView::GetReviewResults() {
+wxVector<Review *> *wxPDFView::GetReviewResults() {
     return &m_impl->reviews;
 }
 
-std::vector<ReviewResult> wxPDFView::GetReviewResultSortedByPage() {
-    return m_impl->results;
+std::vector<ReviewResult *> *wxPDFView::GetReviewResultSortedByPage() {
+    return &m_impl->results;
 }
 
 bool wxPDFView::IsPrintAllowed() const

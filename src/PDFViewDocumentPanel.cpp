@@ -344,7 +344,7 @@ void wxPDFViewDocumentPanel::OnPDFDocumentReady(wxCommandEvent& event)
 	m_pdfView->SetFocus();
 	
 	m_pdfView->SetZoomType((wxPDFViewZoomType) cfg->ReadLong("ZoomType2", wxPDFVIEW_ZOOM_TYPE_FIT_PAGE));
-	m_pdfView->SetDisplayFlags(cfg->ReadLong("DisplayFlags", 0));
+	m_pdfView->SetDisplayFlags((int)cfg->ReadLong("DisplayFlags", 0));
 	if (m_pdfView->GetDisplayFlags() & wxPDFVIEW_DISPLAY_TWO_PAGE_COVER)
 		m_toolBar->ToggleTool(ID_DISPLAY_2PAGES_COVER, true);
 	else if (m_pdfView->GetDisplayFlags() & wxPDFVIEW_DISPLAY_TWO_PAGE)

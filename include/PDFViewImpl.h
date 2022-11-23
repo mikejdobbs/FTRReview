@@ -127,11 +127,11 @@ public:
 	void ExecuteNamedAction(const wxString& action);
     
     //Reviews
-    wxVector<wxSharedPtr<Review> > reviews; //holds each review we are looking for.
-    std::vector<ReviewResult> results; //holds page ordered listing or review results -- shown in side bar
+    wxVector<Review *> reviews; //holds each review we are looking for.
+    std::vector<ReviewResult *> results; //holds page ordered listing or review results -- shown in side bar
     long ReviewPDF(); //runs review populating the Match vector in each review variables
     
-    void SetReviewSelection(wxPDFViewTextRange range)  { reviewSelections.push_back(range); }
+    void SetReviewSelection(wxPDFViewTextRange *range)  { reviewSelections.push_back(range); }
     void SetReviewSelected(wxPDFViewTextRange *range)  { reviewSelected = range; }
 
     void clearSelections() { m_selection.clear(); }
@@ -246,8 +246,8 @@ private:
 	static void ReleaseSDK();
 
     void ReviewPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Review *review);
-    long SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch &reviewSearch);
-    wxVector<wxPDFViewTextRange> reviewSelections; //highlight with all reviews
+    long SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch *reviewSearch);
+    wxVector<wxPDFViewTextRange *> reviewSelections; //highlight with all reviews
     wxPDFViewTextRange *reviewSelected =nullptr; //highlight as the selecgted review
 	friend class wxPDFViewPrintout;
     
