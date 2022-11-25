@@ -90,7 +90,7 @@ wxString wxPDFViewPage::GetwxString()
 	free(buffer);
 
 	//remove non-alphas TODO:OPTOMIZE
-	wxRegEx nonAlphaRE("[^ a - zA - Z0 - 9]");
+	wxRegEx nonAlphaRE("[^a-zA-Z0-9]+");
 	wxLogError("%s", result);
 	nonAlphaRE.ReplaceAll(&result, " ");
 	    
