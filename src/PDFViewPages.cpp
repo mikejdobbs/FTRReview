@@ -85,9 +85,15 @@ wxString wxPDFViewPage::GetwxString()
     //convert to wxString
     wxMBConvUTF16LE converter;
     wxString result((const char *)buffer, converter);
-    
-    //free buffer
-    free (buffer);
+
+	//free buffer
+	free(buffer);
+
+	//remove non-alphas TODO:OPTOMIZE
+	wxRegEx nonAlphaRE("[^ a - zA - Z0 - 9]");
+	wxLogError("%s", result);
+	nonAlphaRE.ReplaceAll(&result, " ");
+	    
     return result;
 }
 

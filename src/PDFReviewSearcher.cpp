@@ -96,6 +96,7 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
         return;
     
     wxString processText = pageText;
+    wxLogError("%s",processText);
     
     //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
     if (patentAppRE.IsValid()) {
