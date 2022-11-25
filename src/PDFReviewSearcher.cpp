@@ -96,7 +96,6 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
         return;
     
     wxString processText = pageText;
-    wxLogError("%s",processText);
     
     //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
     if (patentAppRE.IsValid()) {
@@ -104,8 +103,7 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
             // Find the size of the first match and print it.
             size_t start, len;
             patentAppRE.GetMatch(&start, &len, 0);
-            const wxString appNumberText = patentAppRE.GetMatch(processText,0);
-            std::cout << "PatentApp: " << appNumberText;
+            const wxString appNumberText = patentAppRE.GetMatch(processText,0).Trim();
             reviewSearches.push_back(new ReviewSearch(appNumberText,wxString("Possible Unreported Patent")));
             processText = processText.Mid (start + len); //keep movingt to make sure we got all the text
         }
@@ -121,7 +119,7 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
             // Find the size of the first match and print it.
             size_t start, len;
             patentRE.GetMatch(&start, &len, 0);
-            const wxString patentNumberText = patentRE.GetMatch(processText,0);
+            const wxString patentNumberText = patentRE.GetMatch(processText,0).Trim();
             std::cout << "Patent: " << patentNumberText;
             reviewSearches.push_back(new ReviewSearch(patentNumberText,wxString("Possible Unreported Patent")));
             processText = processText.Mid (start + len); //keep movingt to make sure we got all the text

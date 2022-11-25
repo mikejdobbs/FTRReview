@@ -91,8 +91,7 @@ wxString wxPDFViewPage::GetwxString()
 	free(buffer);
 
 	//remove non-alphas TODO:OPTOMIZE
-    wxLogError("%s", result);
-    std::regex nonAlphaRE("[^a-zA-Z0-9]+");
+    std::regex nonAlphaRE("[^a-zA-Z0-9,/]+");
     return wxString( std::regex_replace( result.ToStdString(), nonAlphaRE, " "));
 }
 
