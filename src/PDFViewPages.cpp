@@ -89,9 +89,11 @@ wxString wxPDFViewPage::GetwxString()
 
 	//free buffer
 	free(buffer);
-
-    return result; // FYI, May contain funky characters
     
+    //remove non-alphas TODO:OPTOMIZE
+    std::regex nonAlphaRE("[^a-zA-Z0-9,/]+");
+    return wxString( std::regex_replace( result.ToStdString(), nonAlphaRE, " "));
+
 }
 
 

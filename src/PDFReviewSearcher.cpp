@@ -97,15 +97,12 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
         return;
 
     try {
-        std::cout << "Searching " << pageText;
-
         std::string s = pageText.ToStdString();
         std::smatch m;
         //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
         while (std::regex_search(s, m, patentAppRE)) {
             for (auto x : m) {
                 const wxString appNumberText = wxString(x).Trim();
-                std::cout << "Found:" << x;
                 reviewSearches.push_back(new ReviewSearch(appNumberText, wxString("Possible Unreported Patent")));
             }
             s = m.suffix().str();
@@ -122,8 +119,6 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
         std::smatch m;
         while (std::regex_search (s,m,patentRE)) {
             for (auto x:m) {
-                std::cout << "Found:" << x;
-
                 const wxString patentNumberText = wxString(x).Trim();
                 reviewSearches.push_back(new ReviewSearch(patentNumberText,wxString("Possible Unreported Patent")));
             }
