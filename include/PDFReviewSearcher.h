@@ -58,6 +58,10 @@ class ReviewForInventionPatent : public Review {
          ReviewForInventionPatent();
          wxString GetReviewTextResult(); //returns text for box
          void PreReviewPage(wxString pageText);
+    
+    private:
+        wxRegEx patentAppRE; //compiled later
+        wxRegEx patentRE; // compiled later
 
        
         

@@ -82,39 +82,46 @@ ReviewForInventionPatent::ReviewForInventionPatent() {
     reviewSearches.push_back(new ReviewSearch("patent",wxString("Possible Unreported Patent")));
     reviewSearches.push_back(new ReviewSearch("USPTO",wxString("Possible Unreported Patent")));
 
+    //compile now, so we do not have to compile for each page;  pcre occationally genrates strange errors
+    patentAppRE.Compile("\\s\\d{2,2}\\/\\d{3,3},*\\d{3,3}\\s"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
+    patentRE.Compile("\\s\\d{1,2},*\\d{3,3},*\\d{3,3}\\s");
+
 }
 
 //called before searching for matches
 void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
-    
-    //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
-    
     wxString processText = pageText;
-    wxRegEx patentAppRE("\\s\\d{2,2}\\/\\d{3,3},*\\d{3,3}\\s"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
-    wxLogError("Using regex \"\\s\\d{2,2}\\/\\d{3,3},*\\d{3,3}\\s\"");
-    while ( patentAppRE.Matches(processText) ) {
-        // Find the size of the first match and print it.
+
+    //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
+    if (patentAppRE.IsValid()) {
+        while ( patentAppRE.Matches(processText) ) {
+            // Find the size of the first match and print it.
             size_t start, len;
             patentAppRE.GetMatch(&start, &len, 0);
             const wxString appNumberText = patentAppRE.GetMatch(processText,0);
             std::cout << "PatentApp: " << appNumberText;
             reviewSearches.push_back(new ReviewSearch(appNumberText,wxString("Possible Unreported Patent")));
             processText = processText.Mid (start + len); //keep movingt to make sure we got all the text
+        }
+    } else {
+        wxLogError("Error compiling patentAppRE?");
     }
     
     
     //7,123,456 numbers to flag
-    wxRegEx patentRE("\\s\\d{1,2},*\\d{3,3},*\\d{3,3}\\s");
-    processText = pageText;
-    wxLogError("Using regex \"\\s\\d{1,2},*\\d{3,3},*\\d{3,3}\\s\"");
-    while ( patentRE.Matches(processText) ) {
-        // Find the size of the first match and print it.
+    if (patentRE.IsValid()) {
+        processText = pageText;
+        while ( patentRE.Matches(processText) ) {
+            // Find the size of the first match and print it.
             size_t start, len;
             patentRE.GetMatch(&start, &len, 0);
             const wxString patentNumberText = patentRE.GetMatch(processText,0);
             std::cout << "Patent: " << patentNumberText;
             reviewSearches.push_back(new ReviewSearch(patentNumberText,wxString("Possible Unreported Patent")));
             processText = processText.Mid (start + len); //keep movingt to make sure we got all the text
+        }
+    } else {
+        wxLogError("Error compiling patentRE?");
     }
 }
 
