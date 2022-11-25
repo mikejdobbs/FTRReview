@@ -14,7 +14,7 @@
 #include "fpdf_text.h"
 
 #include <algorithm>
-#include <regex>
+
 
 //
 // wxPDFViewPage
@@ -90,9 +90,8 @@ wxString wxPDFViewPage::GetwxString()
 	//free buffer
 	free(buffer);
 
-	//remove non-alphas TODO:OPTOMIZE
-    std::regex nonAlphaRE("[^a-zA-Z0-9,/]+");
-    return wxString( std::regex_replace( result.ToStdString(), nonAlphaRE, " "));
+    return result; // FYI, May contain funky characters
+    
 }
 
 

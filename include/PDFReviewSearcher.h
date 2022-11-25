@@ -9,8 +9,8 @@
 #define PDFReviewSearcher_h
 
 #include <wx/wx.h>
-#include <wx/regex.h>
 #include <wx/listimpl.cpp>
+#include <regex>
 
 #include "PDFViewTextRange.h"
 
@@ -60,10 +60,8 @@ class ReviewForInventionPatent : public Review {
          void PreReviewPage(wxString pageText);
     
     private:
-        wxRegEx patentAppRE; //compiled later
-        wxRegEx patentRE; // compiled later
-
-       
+        std::regex patentAppRE;
+        std::regex patentRE;
         
 };
 
