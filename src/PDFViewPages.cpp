@@ -81,7 +81,7 @@ wxString wxPDFViewPage::GetwxString()
     }
     //if we have a count, grab thge buffer
     buffer = (unsigned short *) malloc(sizeof(unsigned short) * (count + 1) * 2 ); //*2 as these are 2 byte words
-
+    FPDFText_GetText(text_page, 0, count, buffer);
     //convert to wxString
     wxMBConvUTF16LE converter;
     wxString result((const char *)buffer, converter);

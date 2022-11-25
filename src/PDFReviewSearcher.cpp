@@ -90,8 +90,13 @@ ReviewForInventionPatent::ReviewForInventionPatent() {
 
 //called before searching for matches
 void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
+    
+    //skip small text sections
+    if (pageText.length() < 10)
+        return;
+    
     wxString processText = pageText;
-
+    
     //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
     if (patentAppRE.IsValid()) {
         while ( patentAppRE.Matches(processText) ) {
