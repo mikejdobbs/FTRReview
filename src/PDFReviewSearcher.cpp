@@ -89,6 +89,7 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
     //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
     wxRegEx patentAppRE("\\s\\d{2,2}\\/\\d{3,3},*\\d{3,3}\\s"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
     wxString processText = pageText;
+    
     while ( patentAppRE.Matches(processText) ) {
         // Find the size of the first match and print it.
             size_t start, len;

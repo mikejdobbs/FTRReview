@@ -10,8 +10,6 @@
 #ifndef PDFVIEW_H
 #define PDFVIEW_H
 
-#define MY_APP_VERSION_STRING "0.1"
-
 
 #include <wx/wx.h>
 #include <wx/sharedptr.h>

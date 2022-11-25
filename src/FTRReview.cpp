@@ -19,6 +19,17 @@ bool FTRReviewApp::OnInit()
 	
 	FTRReviewFrame *frame = new FTRReviewFrame();
 	frame->Show(true);
+    
+    //open files
+    if (argc > 1)
+    for (int i = 1; i < argc; i++) //skips app filename
+    {
+        //wxLogWarning("%s",argv[i]);
+        wxPDFViewDocumentFrame* documentFrame = new wxPDFViewDocumentFrame(frame);
+        if (documentFrame->LoadFile(argv[i]))
+            documentFrame->Show();
+    }
+        
 
 	return true;
 }
@@ -81,7 +92,7 @@ void FTRReviewFrame::onAbout(wxCommandEvent& WXUNUSED(event)) {
     
     wxAboutDialogInfo aboutInfo;
        aboutInfo.SetName("FTRReview");
-       aboutInfo.SetVersion(MY_APP_VERSION_STRING);
+       aboutInfo.SetVersion(VERSION);
        aboutInfo.SetDescription("Final Technical Report Review\n\nSpecial Thanks to Glen Drysdale, Tim Harney, Tim Harney, Paula Leon, and Cindy Ridge");
        aboutInfo.SetCopyright("(C) 2022 License:wxWindows licence\nwww.wxwidgets.org/about/licence/");
        aboutInfo.AddDeveloper("Michael J. Dobbs");
