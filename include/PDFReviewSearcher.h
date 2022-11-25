@@ -58,6 +58,8 @@ class ReviewForInventionPatent : public Review {
          ReviewForInventionPatent();
          wxString GetReviewTextResult(); //returns text for box
          void PreReviewPage(wxString pageText);
+
+       
         
 };
 

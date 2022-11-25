@@ -81,15 +81,17 @@ ReviewForInventionPatent::ReviewForInventionPatent() {
     reviewSearches.push_back(new ReviewSearch("invention",wxString("Possible Unreported Invention")));
     reviewSearches.push_back(new ReviewSearch("patent",wxString("Possible Unreported Patent")));
     reviewSearches.push_back(new ReviewSearch("USPTO",wxString("Possible Unreported Patent")));
+
 }
 
 //called before searching for matches
 void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
     
     //look for 15/123,456 or 15/123456 or \d{2,2}\/\d{3,3},*\d{3,3}
-    wxRegEx patentAppRE("\\s\\d{2,2}\\/\\d{3,3},*\\d{3,3}\\s"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
-    wxString processText = pageText;
     
+    wxString processText = pageText;
+    wxRegEx patentAppRE("\\s\\d{2,2}\\/\\d{3,3},*\\d{3,3}\\s"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
+    wxLogError("Using regex \"\\s\\d{2,2}\\/\\d{3,3},*\\d{3,3}\\s\"");
     while ( patentAppRE.Matches(processText) ) {
         // Find the size of the first match and print it.
             size_t start, len;
@@ -104,6 +106,7 @@ void ReviewForInventionPatent::PreReviewPage(wxString pageText) {
     //7,123,456 numbers to flag
     wxRegEx patentRE("\\s\\d{1,2},*\\d{3,3},*\\d{3,3}\\s");
     processText = pageText;
+    wxLogError("Using regex \"\\s\\d{1,2},*\\d{3,3},*\\d{3,3}\\s\"");
     while ( patentRE.Matches(processText) ) {
         // Find the size of the first match and print it.
             size_t start, len;
@@ -137,7 +140,7 @@ ReviewForProtectiveMarkings::ReviewForProtectiveMarkings() {
     reviewSearches.push_back(new ReviewSearch("limited rights",wxString("Limited Rights")));
     reviewSearches.push_back(new ReviewSearch("restricted rights",wxString("Restricted Rights")));
     reviewSearches.push_back(new ReviewSearch("classified",wxString("Classified")));
-    reviewSearches.push_back(new ReviewSearch("secret",wxString("secret")));
+    reviewSearches.push_back(new ReviewSearch("secret ",wxString("secret")));
     reviewSearches.push_back(new ReviewSearch("confidential",wxString("Confidential")));
     reviewSearches.push_back(new ReviewSearch("business sensitive",wxString("Business Sensitive")));
     reviewSearches.push_back(new ReviewSearch("trade secret",wxString("Trade Secret")));
