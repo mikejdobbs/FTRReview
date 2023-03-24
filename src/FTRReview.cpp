@@ -96,7 +96,7 @@ void FTRReviewFrame::onAbout(wxCommandEvent& WXUNUSED(event)) {
     wxAboutDialogInfo aboutInfo;
        aboutInfo.SetName("FTRReview");
        aboutInfo.SetVersion(VERSION);
-       aboutInfo.SetDescription("Final Technical Report Review\n\nSpecial Thanks to Glen Drysdale, Tim Harney, Tim Harney, Paula Leon, and Cindy Ridge");
+       aboutInfo.SetDescription("Final Technical Report Review\n\nSpecial Thanks to Glen Drysdale, Tim Harney, Paula Leon, and Cindy Ridge");
        aboutInfo.SetCopyright("(C) 2022 License:wxWindows licence\nwww.wxwidgets.org/about/licence/");
        aboutInfo.AddDeveloper("Michael J. Dobbs");
     

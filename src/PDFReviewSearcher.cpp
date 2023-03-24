@@ -183,6 +183,8 @@ wxString ReviewForProtectiveMarkings::GetReviewTextResult() {
 ReviewForCopyright::ReviewForCopyright() {
     reviewSearches.push_back(new ReviewSearch("(c)",wxString("Copyright")));
     reviewSearches.push_back(new ReviewSearch("copyright",wxString("Copyright")));
+    reviewSearches.push_back(new ReviewSearch("©",wxString("Copyright")));
+    reviewSearches.push_back(new ReviewSearch("ⓒ",wxString("Copyright")));
 }
 
 wxString ReviewForCopyright::GetReviewTextResult() {
