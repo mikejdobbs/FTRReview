@@ -84,6 +84,8 @@ class ReviewForCopyright : public Review  {
     private:
 };
 
+
+
 /* Class used to display results orderd by page */
 class ReviewResult {
     public:
@@ -95,6 +97,8 @@ class ReviewResult {
         ReviewResult (int page, wxString description, Review *review, wxPDFViewTextRange *match) : page(page),description(description),review(review),match(match) {};
     
 };
+
+
 
 #endif /* PDFReviewSearcher_h */
 

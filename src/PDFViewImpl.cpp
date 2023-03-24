@@ -1714,16 +1714,24 @@ long wxPDFViewImpl::ReviewPDF() {
     reviews.push_back(new ReviewForProtectiveMarkings());
 
     //for each page
+    bool foundText = false;
+    
     for (int pageIndex = 0;pageIndex != GetPageCount(); ++pageIndex) {
         const wxString pageWxString = m_pages[pageIndex].GetwxString();
         const FPDF_TEXTPAGE pageText = m_pages[pageIndex].GetTextPage();
-       
+    
+        if (pageWxString.Contains("the"))
+            foundText = true;
+        
         for (auto review: reviews) {
             review->PreReviewPage(pageWxString);
             ReviewPage(m_pages[pageIndex], pageText, review);
         } //end search for review
 
     } //end review of each page
+    
+    if (!foundText)
+        wxMessageBox("Please perform OCR or maunually review.  No text was found in the PDF.");
     
     //now populate results used for display
     results.clear();
@@ -1757,8 +1765,6 @@ void wxPDFViewImpl::ReviewPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, Revi
 
 long wxPDFViewImpl::SearchPage(wxPDFViewPage &page, FPDF_TEXTPAGE pageText, ReviewSearch *reviewSearch) {
     
-    bool firstSearch = false;
-    int characterToStartSearchingFrom = 0;
 
     // Find all the matches in the current page.
     unsigned long flags = 0;

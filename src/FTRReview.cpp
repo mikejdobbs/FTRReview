@@ -6,6 +6,7 @@
 #include <wx/sizer.h>
 #include <wx/filedlg.h>
 #include <wx/aboutdlg.h>
+#include "icon.xpm"
 
 #include "FTRReview.h"
 
@@ -65,6 +66,8 @@ FTRReviewFrame::FTRReviewFrame() : wxFrame(NULL, wxID_ANY, "FTRReview")
     
     m_ctrlFile->DragAcceptFiles(true);
     m_ctrlFile->SetDropTarget(new DnDFile());
+    
+    SetIcon(icon_xpm);
     
     Connect(wxID_EXIT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(FTRReviewFrame::onQuit));
     Connect(wxID_ABOUT, wxEVT_COMMAND_MENU_SELECTED,wxCommandEventHandler(FTRReviewFrame::onAbout));
