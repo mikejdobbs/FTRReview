@@ -84,8 +84,8 @@ ReviewForInventionPatent::ReviewForInventionPatent() {
     reviewSearches.push_back(new ReviewSearch("USPTO",wxString("Possible Unreported Patent")));
 
     //compile now, so we do not have to compile for each page;  pcre occationally genrates strange errors
-    patentAppRE = std::regex("\\d{2,2}\\/\\d{3,3},*\\d{3,3}"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
-    patentRE = std::regex("\\d{2,2},*\\d{3,3},*\\d{3,3}");
+    patentAppRE = std::regex("\\d{2,2}\\/\\d{3,3},\\d{3,3}"); //        wxRegEx patentAppRE("\d{2,2}\/\d{3,3},*\d{3,3}");
+    patentRE = std::regex("\\d{2,2},\\d{3,3},\\d{3,3}");
 
 }
 
@@ -148,15 +148,15 @@ wxString ReviewForInventionPatent::GetReviewTextResult() {
 //Protective Markings
 
 ReviewForProtectiveMarkings::ReviewForProtectiveMarkings() {
-    reviewSearches.push_back(new ReviewSearch("proprietary",wxString("Proprietary")));
-    reviewSearches.push_back(new ReviewSearch("export",wxString("Export Control")));
-    reviewSearches.push_back(new ReviewSearch("limited rights",wxString("Limited Rights")));
-    reviewSearches.push_back(new ReviewSearch("restricted rights",wxString("Restricted Rights")));
-    reviewSearches.push_back(new ReviewSearch("classified",wxString("Classified")));
-    reviewSearches.push_back(new ReviewSearch("secret ",wxString("secret")));
-    reviewSearches.push_back(new ReviewSearch("confidential",wxString("Confidential")));
-    reviewSearches.push_back(new ReviewSearch("business sensitive",wxString("Business Sensitive")));
-    reviewSearches.push_back(new ReviewSearch("trade secret",wxString("Trade Secret")));
+    reviewSearches.push_back(new ReviewSearch(" proprietary ",wxString("Proprietary")));
+    reviewSearches.push_back(new ReviewSearch(" export ",wxString("Export Control")));
+    reviewSearches.push_back(new ReviewSearch(" limited rights ",wxString("Limited Rights")));
+    reviewSearches.push_back(new ReviewSearch(" restricted rights ",wxString("Restricted Rights")));
+    // reviewSearches.push_back(new ReviewSearch("classified",wxString("Classified"))); // Too common
+    reviewSearches.push_back(new ReviewSearch(" secret ",wxString("secret")));
+    reviewSearches.push_back(new ReviewSearch(" confidential ",wxString("Confidential")));
+    reviewSearches.push_back(new ReviewSearch(" business sensitive ",wxString("Business Sensitive")));
+    reviewSearches.push_back(new ReviewSearch(" trade secret ",wxString("Trade Secret")));
 
 }
 
@@ -181,7 +181,7 @@ wxString ReviewForProtectiveMarkings::GetReviewTextResult() {
 
 //reviewforCopyright
 ReviewForCopyright::ReviewForCopyright() {
-    reviewSearches.push_back(new ReviewSearch("(c)",wxString("Copyright")));
+    // reviewSearches.push_back(new ReviewSearch("(c)",wxString("Copyright"))); // Removed as too verbose
     reviewSearches.push_back(new ReviewSearch("copyright",wxString("Copyright")));
     reviewSearches.push_back(new ReviewSearch("©",wxString("Copyright")));
     reviewSearches.push_back(new ReviewSearch("ⓒ",wxString("Copyright")));

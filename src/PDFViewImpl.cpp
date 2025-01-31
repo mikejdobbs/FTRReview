@@ -1731,7 +1731,7 @@ long wxPDFViewImpl::ReviewPDF() {
     } //end review of each page
     
     if (!foundText)
-        wxMessageBox("Please perform OCR or maunually review.  No text was found in the PDF.");
+        wxMessageBox("Please perform OCR or manually review.  No text was found in the PDF.");
     
     //now populate results used for display
     results.clear();
