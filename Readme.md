@@ -1,7 +1,14 @@
 
-FTRReview is a Final Technical Report Reviewerusing Google Chromes [PDFium library][2].
+FTRReview is a Final Technical Report Reviewer using [wxWidgets][1] and Google's [PDFium library][2].
+
+![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 Resources
+
+![alt text](https://github.com/mikejdobbs/FTRReview/blob/ea21e997b1dd256a00a788e079e82b71d339adfd/Screenshot1.png?raw=true)
+![alt text](https://github.com/mikejdobbs/FTRReview/blob/ea21e997b1dd256a00a788e079e82b71d339adfd/Screenshot2.png?raw=true)
+
+
 ---------
 * [Download](https://github.com/mikejdobbs/FTRReview/releases)
 * [GitHub](https://github.com/mikejdobbs/FTRReview)
@@ -21,5 +28,3 @@ Currently implemented:
 
 [1]: http://www.wxwidgets.org
 [2]: https://pdfium.googlesource.com/pdfium/
-[3]: https://github.com/bblanchon/pdfium-binaries
-[4]: http://cmake.org/
