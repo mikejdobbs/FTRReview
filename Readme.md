@@ -1,7 +1,6 @@
 
 FTRReview is a Final Technical Report Reviewer using [wxWidgets][1] and Google's [PDFium library][2].
 
-![alt text](https://github.com/[username]/[reponame]/blob/[branch]/image.jpg?raw=true)
 
 Resources
 
